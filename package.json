@@ -4,7 +4,9 @@
   "description": "test",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/server.ts"
+    "dev": "nodemon src/server.ts",
+    "pre-build": "npm install && npm run build",
+    "start": "node build/server.js"
   },
   "author": "",
   "license": "ISC",
