@@ -1,0 +1,24 @@
+[
+  {
+    "email": "1",
+    "password": "2",
+    "role": "admin | user",
+
+    "adminComments": ["4"],
+
+    "fullName": "5",
+    "phoneNumber": "6",
+    "address": "7",
+
+    "likedGames": ["8"],
+    "cartGames": ["9"],
+
+    "orders": ["10"],
+    "completedOrders": 11,
+    "shouldLeaveReview": false,
+    "userReviews": ["12"],
+
+    "isArchived": false,
+    "isBanned": "13"
+  }
+]

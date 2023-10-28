@@ -1,0 +1,18 @@
+[
+  {
+    "bookedDays": [],
+    "orderedGames": [],
+    "deliveryOption": "",
+    "deliveryAddress": "",
+
+    "userId": "",
+
+    "orderStatus": "Just created | Is Checked | In Progress | Cancelled | Completed",
+    "sumOfOrder": 0,
+
+    "userComment": "",
+    "adminComment": "",
+
+    "isArchived": false
+  }
+]

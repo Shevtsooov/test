@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import express from 'express';
 import { gamesRouter } from './routes/games.routes';
+import { usersRouter } from './routes/users.routes';
 
 const app = express();
 
@@ -20,6 +21,9 @@ app.use(express.json());
 app.use(express.static('public'));
 
 app.use(gamesRouter);
+app.use(usersRouter);
+// app.use(ordersRouter);
+// app.use(reviewsRouter);
 
 const PORT = 5020;
 
