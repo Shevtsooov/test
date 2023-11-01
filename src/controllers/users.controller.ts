@@ -66,7 +66,7 @@ export const createNewUser = async (
     const newUser = await user.save();
 
 
-    await sendActivation( email, activationToken );
+    await sendActivation(email, activationToken);
 
     res.status(201).json(newUser);
   } catch (error) {

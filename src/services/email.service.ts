@@ -62,14 +62,14 @@ export const sendActivation = (
     <a href="${href}">${href}</a>
   `;
 
-  sendEmail({
+  return sendEmail({
     email,
     html,
     subject: 'Активація аккаунту PlayAtHome'
   })
 };
 
-export const mailService = {
-  sendEmail,
-  sendActivation,
-}
+// export const mailService = {
+//   sendEmail,
+//   sendActivation,
+// }
