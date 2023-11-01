@@ -1,6 +1,25 @@
 import mongoose from 'mongoose';
 
-const userSchema = new mongoose.Schema({
+export interface IUser {
+  email: string;
+  password: string;
+  role: string;
+  adminComments: string[];
+  fullName: string;
+  phoneNumber: string;
+  address: string;
+  likedGames: string[];
+  cartGames: string[];
+  orders: string[];
+  completedOrders: number;
+  shouldLeaveReview: boolean;
+  userReviews: string[];
+  isArchived: boolean;
+  isBanned: boolean;
+  activationToken: string;
+}
+
+const userSchema = new mongoose.Schema<IUser>({
   email: {
     type: String,
     required: true,
@@ -49,6 +68,10 @@ const userSchema = new mongoose.Schema({
   isBanned: {
     type: Boolean,
   },
+  activationToken: {
+    type: String,
+  },
+  
 });
 
 userSchema.set('timestamps', true);

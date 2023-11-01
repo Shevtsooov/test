@@ -19,6 +19,6 @@
     "userReviews": ["12"],
 
     "isArchived": false,
-    "isBanned": "13"
+    "isBanned": false
   }
 ]

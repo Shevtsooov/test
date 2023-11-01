@@ -3,6 +3,7 @@ import cors from 'cors';
 import express from 'express';
 import { gamesRouter } from './routes/games.routes';
 import { usersRouter } from './routes/users.routes';
+// import { sendEmail } from './services/email.service';
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use(usersRouter);
 // app.use(reviewsRouter);
 
 const PORT = 5020;
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT} 🚀🚀🚀`)
