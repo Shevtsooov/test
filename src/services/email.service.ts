@@ -58,7 +58,8 @@ const sendActivation = (
   ) => {
   const href = `https://ps-rental-service.vercel.app/activate/${token}`
   const html = `
-    <h1>Щоб активувати свій аккаунт, просто перейдіть за наступним посиланням</h1>
+    <h1>Активація аккаунту</h1>
+    <p>Щоб активувати свій аккаунт, просто перейдіть за наступним посиланням</p>
     <a href="${href}">${href}</a>
   `;
 
