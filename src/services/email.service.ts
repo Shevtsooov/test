@@ -29,7 +29,7 @@ async function main() {
   //       Or you can use the "preview-email" npm package to preview emails locally in browsers and iOS Simulator
   //       <https://github.com/forwardemail/preview-email>
   //
-}
+};
 
 // main().catch(console.error);
 
@@ -37,10 +37,9 @@ interface sendEmail {
   email: string,
   subject: string,
   html: string,
-}
+};
 
-
-export const sendEmail = ({
+const sendEmail = ({
   email,
   subject,
   html
@@ -52,7 +51,7 @@ export const sendEmail = ({
   });
 };
 
-export const sendActivation = (
+const sendActivation = (
   email: string,
   token: string,
   ) => {
@@ -69,7 +68,7 @@ export const sendActivation = (
   })
 };
 
-// export const mailService = {
-//   sendEmail,
-//   sendActivation,
-// }
+export const mailService = {
+  sendEmail,
+  sendActivation,
+}

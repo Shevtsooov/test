@@ -1,10 +1,10 @@
 import type { Request, Response } from 'express';
 import { User } from '../models/users';
 import { IUser } from '../models/users';
-import { sendActivation } from '../services/email.service';
 import { v4 as uuidv4} from "uuid";
 import { sign } from '../services/jwt.service';
 import { normalize } from '../services/user.service';
+import { mailService } from '../services/email.service';
 
 export const getUsersList = async (
   req: Request,
@@ -66,7 +66,7 @@ export const createNewUser = async (
     const newUser = await user.save();
 
 
-    await sendActivation(email, activationToken);
+    await mailService.sendActivation(email, activationToken);
 
     res.status(201).json(newUser);
   } catch (error) {
