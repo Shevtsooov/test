@@ -62,7 +62,7 @@ export const sendActivation = (
     <a href="${href}">${href}</a>
   `;
 
-  return sendEmail({
+  sendEmail({
     email,
     html,
     subject: 'Активація аккаунту PlayAtHome'
