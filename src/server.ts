@@ -8,7 +8,7 @@ import { usersRouter } from './routes/users.routes';
 const app = express();
 
 app.use(cors({
-  origin: 'https://testps.onrender.com',
+  origin: 'http://localhost:3000',
   credentials: true
 }));
 
