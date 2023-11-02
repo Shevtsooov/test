@@ -8,7 +8,8 @@ import { usersRouter } from './routes/users.routes';
 const app = express();
 
 app.use(cors({
-  origin: '*'
+  origin: '*',
+  credentials: true
 }));
 
 mongoose.connect('mongodb+srv://psRentalService:psRentalService@cluster0.bsgedck.mongodb.net/?retryWrites=true&w=majority');

@@ -113,7 +113,7 @@ export const login = async (
   const accesToken = sign(normalizedUser);
 
   res.send({
-    user,
+    normalizedUser,
     accesToken,
   });
 };

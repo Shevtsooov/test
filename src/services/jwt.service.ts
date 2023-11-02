@@ -9,7 +9,7 @@ export const sign = (user: Pick<IUser, "email">) => {
 
 export const verify = (token: string) => {
   try { 
-    jwt.verify(token, 'hello_token');
+    return jwt.verify(token, 'hello_token');
   } catch (error) {
     return null;
   }
