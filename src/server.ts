@@ -8,7 +8,8 @@ import { usersRouter } from './routes/users.routes';
 const app = express();
 
 app.use(cors({
-  origin: 'http://localhost:3000',
+  // origin: 'http://localhost:3000',
+  origin: 'https://ps-rental-service.vercel.app',
   credentials: true
 }));
 
@@ -16,7 +17,7 @@ mongoose.connect('mongodb+srv://psRentalService:psRentalService@cluster0.bsgedck
 
 const db = mongoose.connection;
 
-db.on('eror', (error) => console.error(error));
+db.on('error', (error) => console.error(error));
 db.once('open', () => console.log('Connected to db'));
 
 app.use(express.json());
