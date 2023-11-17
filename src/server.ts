@@ -1,36 +1,43 @@
 import mongoose from 'mongoose';
 import cors from 'cors';
 import express from 'express';
+import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
 import { gamesRouter } from './routes/games.routes';
 import { usersRouter } from './routes/users.routes';
-// import { sendEmail } from './services/email.service';
+
+dotenv.config();
 
 const app = express();
 
+app.use(cookieParser());
+app.use(express.json());
+app.use(express.static('public'));
+
 app.use(cors({
-  // origin: 'http://localhost:3000',
-  origin: 'https://ps-rental-service.vercel.app',
+  // origin: '*',
+  origin: 'http://localhost:3000',
+  // origin: 'https://web.postman.co',
+  // origin: 'https://ps-rental-service.vercel.app',
   credentials: true
 }));
 
-mongoose.connect('mongodb+srv://psRentalService:psRentalService@cluster0.bsgedck.mongodb.net/?retryWrites=true&w=majority');
+mongoose.connect(process.env.DB_URL as string);
 
 const db = mongoose.connection;
 
 db.on('error', (error) => console.error(error));
 db.once('open', () => console.log('Connected to db'));
 
-app.use(express.json());
-app.use(express.static('public'));
-
 app.use(gamesRouter);
 app.use(usersRouter);
 // app.use(ordersRouter);
 // app.use(reviewsRouter);
 
-const PORT = 5020;
+const PORT = process.env.PORT || 5020;
 
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT} 🚀🚀🚀`)
 });
+ 

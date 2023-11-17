@@ -5,33 +5,51 @@ export const getAllActivated = () => {
 };
 
 export const normalize = ({
+  id,
   email,
   role,
   adminComments,
   fullName,
   phoneNumber,
+  address,
   likedGames,
   cartGames,
   orders,
   completedOrders,
   shouldLeaveReview,
+  userReviews,
   isArchived,
   isBanned,
   activationToken,
 }: Omit<IUser, "password">) => {
   return {
+    id,
     email,
     role,
     adminComments,
     fullName,
     phoneNumber,
+    address,
     likedGames,
     cartGames,
     orders,
     completedOrders,
     shouldLeaveReview,
+    userReviews,
     isArchived,
     isBanned,
     activationToken,
   }
 };
+
+// export const normalize = ({
+//   id,
+//   email,
+//   activationToken,
+// }: Omit<IUser, "password" | "email" | "activationToken">) => {
+//   return {
+//     id,
+//     email,
+//     activationToken,
+//   }
+// };

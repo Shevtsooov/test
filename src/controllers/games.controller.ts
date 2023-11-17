@@ -12,7 +12,7 @@ export const getGamesList = async (
     year,
     players,
   } = req.query;
-
+  
   try {
     let games = await Game.find();
 
@@ -115,43 +115,3 @@ export const addGameToList = async (
     // res.status(400).json({ message: error.message });
   }
 };
-
-
-
-    // if (query !== '') {
-    //   const formattedQuery = query.toString().trim().toLowerCase();
-    //   games = games.filter((game) => (
-    //     game.title.toLowerCase().includes(formattedQuery) ||
-    //     game.description.toLowerCase().includes(formattedQuery)
-    //   ));
-    // }
-
-    // if (year !== 'all') {
-    //   games = games.filter((game) => game.releasedOn.includes(year.toString()));
-    // }
-
-    // if (players !== 'all') {
-    //   games = games.filter((game) => game.players.includes(players.toString()));
-    // }
-
-    // if (categories !== 'all') {
-    //   const searchedCategories = categories.toString().split(',');
-    //   games = games.filter((game) => {
-    //     const gameCategories = game.category.map((cat) => cat.toLowerCase());
-    //     return searchedCategories.every((cat) => gameCategories.includes(cat));
-    //   });
-    // }
-
-    // if (sortBy === 'ASC') {
-    //   games.sort((gA, gB) => {
-    //     const [dayA, monthA, yearA] = gA.releasedOn.split('/').map(Number);
-    //     const [dayB, monthB, yearB] = gB.releasedOn.split('/').map(Number);
-    //     if (yearA !== yearB) {
-    //       return yearB - yearA; // Sort by year in descending order
-    //     } else if (monthA !== monthB) {
-    //       return monthB - monthA; // If years are the same, sort by month in descending order
-    //     } else {
-    //       return dayB - dayA; // If years and months are the same, sort by day in descending order
-    //     }
-    //   });
-    // }

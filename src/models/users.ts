@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
+import { IGame } from './games';
 
 export interface IUser {
+  id: string;
   email: string;
   password: string;
   role: string;
@@ -20,6 +22,9 @@ export interface IUser {
 }
 
 const userSchema = new mongoose.Schema<IUser>({
+  // _id: {
+  //   type: String,
+  // },
   email: {
     type: String,
     required: true,

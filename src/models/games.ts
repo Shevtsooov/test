@@ -1,6 +1,25 @@
 import mongoose from 'mongoose';
 
-const gameSchema = new mongoose.Schema({
+export interface IGame {
+  title: string;
+  iconLink: string;
+  icon: string;
+  gameId: string;
+  poster: string;
+  description: string;
+  videoReview: string;
+  videoGameplay: string;
+  price: number;
+  discountedPrice: number;
+  category: string[];
+  players: string;
+  disclaimers: string[];
+  releasedOn: string;
+  isAvailable: boolean;
+  popularity: number;
+};
+
+const gameSchema = new mongoose.Schema<IGame>({
   title: {
     type: String,
   },
