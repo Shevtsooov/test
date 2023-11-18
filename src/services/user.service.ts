@@ -21,6 +21,8 @@ export const normalize = ({
   isArchived,
   isBanned,
   activationToken,
+  createdAt,
+  updatedAt,
 }: Omit<IUser, "password">) => {
   return {
     id,
@@ -39,6 +41,8 @@ export const normalize = ({
     isArchived,
     isBanned,
     activationToken,
+    createdAt,
+    updatedAt,
   }
 };
 

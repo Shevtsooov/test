@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import { IGame } from './games';
 
 export interface IUser {
   id: string;
@@ -19,6 +18,8 @@ export interface IUser {
   isArchived: boolean;
   isBanned: boolean;
   activationToken: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 const userSchema = new mongoose.Schema<IUser>({
