@@ -1,0 +1,20 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.usersRouter = void 0;
+const express_1 = __importDefault(require("express"));
+const users_controller_1 = require("../controllers/users.controller");
+exports.usersRouter = express_1.default.Router();
+// usersRouter.get('/users', express.json(), getUsersList);
+// usersRouter.get('/users/:id', express.json(), getOneUser);
+// usersRouter.post('/authentication', express.json(), login);
+// usersRouter.get('/activation/:activationToken', express.json(), activateUser);
+exports.usersRouter.post('/registration', express_1.default.json(), users_controller_1.register);
+exports.usersRouter.post('/login', express_1.default.json(), users_controller_1.login);
+exports.usersRouter.post('/logout', express_1.default.json(), users_controller_1.logout);
+exports.usersRouter.get('/activation/:activationToken', express_1.default.json(), users_controller_1.activate);
+exports.usersRouter.post('/refresh', express_1.default.json(), users_controller_1.refresh);
+exports.usersRouter.patch('/users', express_1.default.json(), users_controller_1.update);
+exports.usersRouter.get('/users', express_1.default.json(), users_controller_1.getList);
