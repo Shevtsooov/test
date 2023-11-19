@@ -1,11 +1,10 @@
-// import express from 'express';
+import express from 'express';
+import { getList, getUserOrders, makeNewOrder } from '../controllers/orders.controller';
 
-// import {
-//   getGamesList,
-//   addGameToList,
-// } from '../controllers/games.controller'
 
-// export const gamesRouter = express.Router();
+export const ordersRouter = express.Router();
 
-// gamesRouter.get('/games', express.json(), getGamesList);
-// gamesRouter.post('/games', express.json(), addGameToList);
+ordersRouter.get('/orders', express.json(), getList);
+ordersRouter.get('/orders/:id', express.json(), getUserOrders);
+
+ordersRouter.post('/orders', express.json(), makeNewOrder);

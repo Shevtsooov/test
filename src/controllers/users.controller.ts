@@ -16,26 +16,30 @@ export const getList = async (
   try {
     let users = await User.find();
 
-    res.json(users);
+    const normalizedUsers = users.map(user => normalize(user));
+
+    res.json(normalizedUsers);
   } catch (error) {
     // res.status(500).json({ message: error.message });
   }
 };
 
-export const getOneUser = async (
-  req: Request,
-  res: Response,
-  ): Promise<void> => {
-   const { id } = req.body;
+// export const getOneUser = async (
+//   req: Request,
+//   res: Response,
+//   ): Promise<void> => {
+//    const { id } = req.params;
 
-  try {
-    let user = await User.findOne({ id });
+//   try {
+//     let user = await User.findOne({ _id: id });
 
-    res.json(user);
-  } catch (error) {
-    // res.status(500).json({ message: error.message });
-  }
-};
+//     const normalizedUser = normalize(user);
+
+//     res.json(normalizedUser);
+//   } catch (error) {
+//     // res.status(500).json({ message: error.message });
+//   }
+// };
 
 export const register = async (
   req: Request,
@@ -124,7 +128,9 @@ export const activate = async (
     user.activationToken = 'activated';
     user.save();
 
-    res.send(user);
+    const normalizedUser = normalize(user);
+
+    res.send(normalizedUser);
 };
 
 export const login = async (

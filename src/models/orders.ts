@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 
 const orderSchema = new mongoose.Schema({
   bookedDays: {
@@ -14,7 +14,8 @@ const orderSchema = new mongoose.Schema({
     type: String,
   },
   userId: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: 'User',
   },
   orderStatus: {
     type: String,

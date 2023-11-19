@@ -7,6 +7,7 @@ import {
   update,
   logout,
   refresh,
+  // getOneUser,
 } from '../controllers/users.controller';
 
 export const usersRouter = express.Router();

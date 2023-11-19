@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 // import cookieParser from 'cookie-parser';
 import { gamesRouter } from './routes/games.routes';
 import { usersRouter } from './routes/users.routes';
+import { ordersRouter } from './routes/orders.routes';
 
 dotenv.config();
 
@@ -21,30 +22,18 @@ app.use(cors({
   origin: 'https://ps-rental-service.vercel.app',
   credentials: true
 }));
-
-// mongoose.connect(process.env.DB_URL as string);
-
-// const db = mongoose.connection;
-
-// db.on('error', (error) => console.error(error));
-// db.once('open', () => console.log('Connected to db'));
-
+ 
 app.use(gamesRouter);
 app.use(usersRouter);
-// app.use(ordersRouter);
+app.use(ordersRouter);
 // app.use(reviewsRouter);
 
 const PORT = process.env.PORT || 5020;
 
 
-// app.listen(PORT, () => {
-//   console.log(`Server is running on http://localhost:${PORT} 🚀🚀🚀`)
-// });
- 
-
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.DB_URL as string);
+    await mongoose.connect(process.env.DB_URL as string);
     console.log('connected to db');
   } catch (error) {
     console.log(error);
@@ -52,14 +41,9 @@ const connectDB = async () => {
   }
 }
 
-//Routes go here
-app.all('*', (req,res) => {
-    res.json({"every thing":"is awesome"})
-})
-
 //Connect to the database before listening
 connectDB().then(() => {
     app.listen(PORT, () => {
       console.log(`Server is running on http://localhost:${PORT} 🚀🚀🚀`)
     });
-})
+});

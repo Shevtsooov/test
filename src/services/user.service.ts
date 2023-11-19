@@ -23,7 +23,7 @@ export const normalize = ({
   activationToken,
   createdAt,
   updatedAt,
-}: Omit<IUser, "password">) => {
+}: IUser ) => {
   return {
     id,
     email,

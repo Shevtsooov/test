@@ -1,157 +1,95 @@
 import type { Request, Response } from 'express';
-import { Game } from '../models/games'
+import { Order } from '../models/orders';
 
-export const getGamesList = async (
+export const getList = async (
   req: Request,
   res: Response,
   ): Promise<void> => {
-  const {
-    sortBy = 'DESC',
-    query = '',
-    categories,
-    year,
-    players,
-  } = req.query;
-
   try {
-    let games = await Game.find();
+    let orders = await Order.find();
 
-    if (query !== '') {
-      const formattedQuery = new RegExp(query.toString(), 'i');
-      games = games.filter((game) => (
-        game.title?.match(formattedQuery) || game.description?.match(formattedQuery)
-      ));
-    }
-
-    if (year) {
-      games = games.filter((game) => game.releasedOn?.includes(year.toString()));
-    }
-
-    if (players) {
-      games = games.filter((game) => game.players?.includes(players.toString()));
-    }
-
-    if (categories) {
-      const searchedCategories = categories.toString().split(',').map((category) => category.trim());
-      games = games.filter((game) => {
-        const gameCategories = game.category.map((cat) => cat.trim());
-        return searchedCategories.every((cat) => gameCategories.includes(cat));
-      });
-    }
-
-    games.sort((gA, gB) => {
-      const [dayA, monthA, yearA] = gA.releasedOn!.toString().split('/').map(Number);
-      const [dayB, monthB, yearB] = gB.releasedOn!.toString().split('/').map(Number);
-
-      if (yearA !== yearB) {
-        return sortBy === 'DESC'
-          ? yearB - yearA
-          : yearA - yearB
-      } 
-      
-      if (monthA !== monthB) {
-        return sortBy === 'DESC'
-          ? monthB - monthA
-          : monthA - monthB
-      }
-
-      return sortBy === 'DESC'
-        ? dayB - dayA
-        : dayA - dayB
-      });
-
-    res.json(games);
+    res.json(orders);
   } catch (error) {
     // res.status(500).json({ message: error.message });
   }
 };
 
-export const addGameToList = async (
+export const getUserOrders = async (
+  req: Request,
+  res: Response,
+  ): Promise<void> => {
+   const { id } = req.params;
+
+  try {
+    let orders = await Order.find({ userId: id });
+
+    res.json(orders);
+  } catch (error) {
+    // res.status(500).json({ message: error.message });
+  }
+};
+
+export const makeNewOrder = async (
   req: Request,
   res: Response
 ) => {
   const {
-    title,
-    icon,
-    iconLink,
-    gameId,
-    poster,
-    description,
-    videoReview,
-    videoGameplay,
-    price,
-    discountedPrice,
-    category,
-    players,
-    disclaimers,
-    releasedOn,
-    isAvailable,
-    popularity,
+    bookedDays,
+    orderedGames,
+    deliveryOption,
+    deliveryAddress,
+    userId,
+    orderStatus,
+    sumOfOrder,
+    userComment,
+    adminComment,
+    isArchived,
   } = req.body;
 
-  const game = new Game({
-    title,
-    icon,
-    iconLink,
-    gameId,
-    poster,
-    description,
-    videoReview,
-    videoGameplay,
-    price,
-    discountedPrice,
-    category,
-    players,
-    disclaimers,
-    releasedOn,
-    isAvailable,
-    popularity,
+  const order = new Order({
+    bookedDays,
+    orderedGames,
+    deliveryOption,
+    deliveryAddress,
+    userId,
+    orderStatus,
+    sumOfOrder,
+    userComment,
+    adminComment,
+    isArchived,
   })
 
   try {
-    const newGame = await game.save();
-    res.status(201).json(newGame);
+    const newOrder = await order.save();
+    res.status(201).json(newOrder);
   } catch (error) {
     // res.status(400).json({ message: error.message });
   }
 };
 
 
+// {
+//   "bookedDays": [10, 20, 30],
+//   "orderedGames":  [10, 20, 30],
+//   "deliveryOption":  "delisd fsgdf gsd dfgdghsvery",
+//   "deliveryAddress": "addr gdfgdsfgdfs gess",
+//   "userId": "6557d7576cbe54049bfa14d1",
+//   "orderStatus": "В обробці",
+//   "sumOfOrder": 1200,
+//   "userComment": "comment here",
+//   "adminComment": "comment here",
+//   "isArchived": false
+// }
 
-    // if (query !== '') {
-    //   const formattedQuery = query.toString().trim().toLowerCase();
-    //   games = games.filter((game) => (
-    //     game.title.toLowerCase().includes(formattedQuery) ||
-    //     game.description.toLowerCase().includes(formattedQuery)
-    //   ));
-    // }
-
-    // if (year !== 'all') {
-    //   games = games.filter((game) => game.releasedOn.includes(year.toString()));
-    // }
-
-    // if (players !== 'all') {
-    //   games = games.filter((game) => game.players.includes(players.toString()));
-    // }
-
-    // if (categories !== 'all') {
-    //   const searchedCategories = categories.toString().split(',');
-    //   games = games.filter((game) => {
-    //     const gameCategories = game.category.map((cat) => cat.toLowerCase());
-    //     return searchedCategories.every((cat) => gameCategories.includes(cat));
-    //   });
-    // }
-
-    // if (sortBy === 'ASC') {
-    //   games.sort((gA, gB) => {
-    //     const [dayA, monthA, yearA] = gA.releasedOn.split('/').map(Number);
-    //     const [dayB, monthB, yearB] = gB.releasedOn.split('/').map(Number);
-    //     if (yearA !== yearB) {
-    //       return yearB - yearA; // Sort by year in descending order
-    //     } else if (monthA !== monthB) {
-    //       return monthB - monthA; // If years are the same, sort by month in descending order
-    //     } else {
-    //       return dayB - dayA; // If years and months are the same, sort by day in descending order
-    //     }
-    //   });
-    // }
+// {
+//   "bookedDays": ['3143124', '4234234 23'],
+//   "orderedGames":  [10, 20, 30],
+//   "deliveryOption":  "delisd fsgdf gsd dfgdghsvery",
+//   "deliveryAddress": "addr gdfgdsfgdfs gess",
+//   "userId": "655757daec7e941b083da991",
+//   "orderStatus": "В обробці",
+//   "sumOfOrder": 1200,
+//   "userComment": "comment here",
+//   "adminComment": "comment here",
+//   "isArchived": false
+// }
