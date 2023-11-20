@@ -1,4 +1,6 @@
 import nodemailer from 'nodemailer';
+import { IGame } from '../models/games';
+import { generateConfirmationEmailHTML } from '../mail_templates/test';
 
 const transporter = nodemailer.createTransport({
   host: 'smtp.zoho.eu',
@@ -34,7 +36,7 @@ const transporter = nodemailer.createTransport({
 // main().catch(console.error);
 
 interface sendEmail {
-  email: string,
+  email: string | string[],
   subject: string,
   html: string,
 };
@@ -52,6 +54,7 @@ const sendEmail = ({
   });
 };
 
+// ACTIVATION MAILS
 const sendActivation = (
   email: string,
   token: string,
@@ -70,7 +73,126 @@ const sendActivation = (
   })
 };
 
+// ORDER CONFIRMATION MAILS
+
+const sendOrderConfirmation = (
+  email: string,
+  bookedDays: string[],
+  deliveryOption: string,
+  deliveryAddress: string,
+  orderStatus: string,
+  sumOfOrder: number,
+  userComment: string,
+  games: IGame[],
+) => {
+
+  // const renderedGames = `
+  // ${games.map(game => (
+  //   `<div>
+  //     <img src=${game.iconLink} alt=${game.gameId} />
+  //     <h5>${game.title}</h5>
+  //     <h6>${game.description}</h6>
+  //   </div>`
+  // ))}
+`
+
+  // const html = `
+  //   <h1>Дякуємо за замовлення PlayAtHome</h1>
+  //   <p>В найближчий час з вами зв'яжеться наш менеджер для уточненя деталей</p>
+
+  //   <h5>Заброньовані дні:</h5>
+  //   <p>${bookedDays.join(', ')}</p>
+
+  //   <h5>Обраний спосіб доставки:</h5>
+  //   <p>${bookedDays.join(', ')}</p>
+
+  //   <h5>Статус замовлення:</h5>
+  //   <p>${orderStatus}</p>
+
+  //   <h5>Сума замовлення:</h5>
+  //   <p>${sumOfOrder} грн</p>
+
+  //   </hr>
+
+  //   ${renderedGames}
+  // `;
+
+  const html = generateConfirmationEmailHTML(
+    bookedDays,
+    deliveryOption,
+    deliveryAddress,
+    // orderStatus,
+    sumOfOrder,
+    userComment,
+    games,
+  )
+
+  return sendEmail({
+    email,
+    html,
+    subject: 'Замовлення PlayAtHome'
+  })
+};
+
+const sendAdminOrderConfirmation = (
+  email: string[],
+  bookedDays: string[],
+  deliveryOption: string,
+  deliveryAddress: string,
+  orderStatus: string,
+  sumOfOrder: number,
+  userComment:string,
+  games: IGame[],
+) => {
+
+//   const renderedGames = `
+//   ${games.map(game => (
+//     `<div>
+//       <img src=${game.iconLink} alt=${game.gameId} />
+//       <h5>${game.title}</h5>
+//       <h6>${game.description}</h6>
+//     </div>`
+//   ))}
+// `
+
+//   const html = `
+//     <h5>Заброньовані дні:</h5>
+//     <p>${bookedDays.join(', ')}</p>
+
+//     <h5>Обраний спосіб доставки:</h5>
+//     <p>${deliveryOption}</p>
+
+//     <h5>Статус замовлення:</h5>
+//     <p>${orderStatus}</p>
+
+//     <h5>Сума замовлення:</h5>
+//     <p>${sumOfOrder} грн</p>
+
+//     </hr>
+
+//     ${renderedGames}
+//   `;
+
+  const html = generateConfirmationEmailHTML(
+    bookedDays,
+    deliveryOption,
+    deliveryAddress,
+    // orderStatus,
+    sumOfOrder,
+    userComment,
+    games,
+  )
+
+  return sendEmail({
+    email,
+    html,
+    subject: 'Нове замовлення PlayAtHome'
+  })
+};
+
 export const mailService = {
   sendEmail,
   sendActivation,
+  sendOrderConfirmation,
+  sendAdminOrderConfirmation,
 }

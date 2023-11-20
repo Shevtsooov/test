@@ -1,5 +1,8 @@
+import { mailService } from './../services/email.service';
 import type { Request, Response } from 'express';
 import { Order } from '../models/orders';
+import { User } from '../models/users';
+import { Game } from '../models/games';
 
 export const getList = async (
   req: Request,
@@ -61,6 +64,33 @@ export const makeNewOrder = async (
 
   try {
     const newOrder = await order.save();
+
+    const user = await User.findOne({ _id: newOrder.userId });
+    const games = await Game.find({ gameId: [...newOrder.orderedGames]})
+
+    if (user) {
+      await mailService.sendOrderConfirmation(
+        user.email,
+        bookedDays,
+        deliveryOption,
+        deliveryAddress,
+        orderStatus,
+        sumOfOrder,
+        userComment,
+        games,
+      )
+    };
+ 
+    await mailService.sendAdminOrderConfirmation(
+      ["igorshevtsooov1995@gmail.com", "contact.shevtsov@gmail.com"],
+      bookedDays,
+      deliveryOption,
+      deliveryAddress,
+      orderStatus,
+      sumOfOrder,
+      userComment,
+      games,
+    )
     res.status(201).json(newOrder);
   } catch (error) {
     // res.status(400).json({ message: error.message });
