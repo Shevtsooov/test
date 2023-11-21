@@ -1,6 +1,6 @@
 import { mailService } from './../services/email.service';
 import type { Request, Response } from 'express';
-import { Order } from '../models/orders';
+import { IOrder, Order } from '../models/orders';
 import { User } from '../models/users';
 import { Game } from '../models/games';
 
@@ -9,9 +9,16 @@ export const getList = async (
   res: Response,
   ): Promise<void> => {
   try {
-    let orders = await Order.find();
+    let orders: IOrder[] = await Order.find();
 
-    res.json(orders);
+    const sortedOrders = orders.sort((orderA, orderB) => {
+      const dateA = new Date(orderA.createdAt);
+      const dateB = new Date(orderB.createdAt);
+  
+      return dateB.getTime() - dateA.getTime()
+    });
+
+    res.json(sortedOrders);
   } catch (error) {
     // res.status(500).json({ message: error.message });
   }

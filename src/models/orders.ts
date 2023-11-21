@@ -1,5 +1,20 @@
 import mongoose, { Schema } from 'mongoose';
 
+export interface IOrder {
+  bookedDays: string[];
+  orderedGames: string[];
+  deliveryOption: string;
+  deliveryAddress: string;
+  userId: string;
+  orderStatus: string;
+  sumOfOrder: number;
+  userComment: string;
+  adminComment: string;
+  isArchived: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
 const orderSchema = new mongoose.Schema({
   bookedDays: {
     type: [String],
