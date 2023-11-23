@@ -12,6 +12,10 @@ export const generateConfirmationEmailHTML = (
 
   const now = new Date().toDateString().slice(3);
 
+  const delivery = deliveryOption === 'Доставка'
+    ? `<p style="margin: 0 0 5px 0;">Адреса доставки: ${deliveryAddress}</p>`
+    : ``
+
   const renderedGames = `
   ${games.map(game => (
     `
@@ -50,6 +54,18 @@ export const generateConfirmationEmailHTML = (
       </head>
       <body style="box-sizing: border-box; margin: 0; padding: 0; font-family: 'Trebuchet MS', Arial, sans-serif; font-weight: 400;">
 
+      <header
+        style="text-align: center; height: 60px; background-color: #ececec; padding-top: 20px; border-radius: 15px; margin-bottom: 15px;"
+      >
+        <a href="https://ps-rental-service.vercel.app/home">
+          <img
+            src="https://i.ibb.co/cv6k6gY/1.png"
+            alt=""
+            style="width: 220px; object-fit: cover;"
+          >
+        </a>
+      </header>
+
         <main style="box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 10px;">
 
           <div style="border-radius: 15px; background-color: #ececec; padding: 10px;">
@@ -57,7 +73,7 @@ export const generateConfirmationEmailHTML = (
 
             <p style="margin: 0 0 5px 0;">Заброньовані дні: ${bookedDays}</p>
             <p style="margin: 0 0 5px 0;">Спосіб доставки: ${deliveryOption}</p>
-            <p style="margin: 0 0 5px 0;">Адреса доставки: ${deliveryAddress}</p>
+            ${delivery}
             <p style="margin: 0 0 5px 0;">Сума: ${sumOfOrder}</p>
 
             <p style="margin: 0 0 5px 0;">Коментар:</p>
@@ -67,21 +83,27 @@ export const generateConfirmationEmailHTML = (
           <div style="width: 100%;">
             <h3 style="margin-bottom: 15px;">Обрані ігри:</h3>
 
-            ${renderedGames.split(',')}
+            ${renderedGames}
 
           </div>
 
         </main>
 
         <footer style="box-sizing: border-box; padding: 10px; font-size: 28px; color: #ececec; background-color: #0070d1; border-radius: 15px;">
-        <a href="https://ps-rental-service.vercel.app/home" style="text-decoration: none; font-size: 32px; color: #ececec; margin: 0;" >PlayAtHome</a>
-        <hr style="color: #ececec;">
-        <a href="https://ps-rental-service.vercel.app/home" style="display: block; text-decoration: none; margin: 0; font-size: 16px; color: #ececec; margin-bottom: 10px;">Головна</a>
-        <a href="https://ps-rental-service.vercel.app/games" style="display: block; text-decoration: none; margin: 0; font-size: 16px; color: #ececec; margin-bottom: 10px;">Ігри</a>
-        <a href="https://ps-rental-service.vercel.app/plans" style="display: block; text-decoration: none; margin: 0; font-size: 16px; color: #ececec; margin-bottom: 10px;">Тарифи і доставка</a>
-        <a href="https://ps-rental-service.vercel.app/agreement" style="display: block; text-decoration: none; margin: 0; font-size: 16px; color: #ececec; margin-bottom: 10px;">Умови договору</a>
-        <a href="https://ps-rental-service.vercel.app/login" style="display: block; text-decoration: none; margin: 0; font-size: 16px; color: #ececec; margin-bottom: 25px;">Увійти</a>
-      </footer>
+          <a href="https://ps-rental-service.vercel.app/home">
+            <img
+              src="https://i.ibb.co/DK2867S/123.png"
+              alt=""
+              style="width: 200px; object-fit: cover;"
+            >
+          </a>
+          <hr style="color: #ececec; margin-top: 0;">
+          <a href="https://ps-rental-service.vercel.app/home" style="display: block; text-decoration: none; margin: 0; font-size: 16px; color: #ececec; margin-bottom: 10px;">Головна</a>
+          <a href="https://ps-rental-service.vercel.app/games" style="display: block; text-decoration: none; margin: 0; font-size: 16px; color: #ececec; margin-bottom: 10px;">Ігри</a>
+          <a href="https://ps-rental-service.vercel.app/plans" style="display: block; text-decoration: none; margin: 0; font-size: 16px; color: #ececec; margin-bottom: 10px;">Тарифи і доставка</a>
+          <a href="https://ps-rental-service.vercel.app/agreement" style="display: block; text-decoration: none; margin: 0; font-size: 16px; color: #ececec; margin-bottom: 10px;">Умови договору</a>
+          <a href="https://ps-rental-service.vercel.app/login" style="display: block; text-decoration: none; margin: 0; font-size: 16px; color: #ececec; margin-bottom: 25px;">Увійти</a>
+        </footer>
       </body>
     </html>
   `
