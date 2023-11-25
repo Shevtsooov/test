@@ -1,6 +1,6 @@
-import { IGame } from "../models/games"
+import { IGame } from "../../../../models/games";
 
-export const generateConfirmationEmailHTML = (
+export const generateAdminConfirmationEmailHTML = (
   bookedDays: string[],
   deliveryOption: string,
   deliveryAddress: string,

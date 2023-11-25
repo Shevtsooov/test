@@ -1,8 +1,9 @@
-import { mailService } from './../services/email.service';
 import type { Request, Response } from 'express';
 import { IOrder, Order } from '../models/orders';
 import { User } from '../models/users';
 import { Game } from '../models/games';
+import { sendClientOrderConfirmation } from '../services/emailService/orders/clientConfirmation.mail';
+import { sendAdminOrderConfirmation } from '../services/emailService/orders/adminConfirmation.mail';
 
 export const getList = async (
   req: Request,
@@ -76,7 +77,7 @@ export const makeNewOrder = async (
     const games = await Game.find({ gameId: [...newOrder.orderedGames]})
 
     if (user) {
-      await mailService.sendOrderConfirmation(
+      await sendClientOrderConfirmation(
         user.email,
         bookedDays,
         deliveryOption,
@@ -87,8 +88,8 @@ export const makeNewOrder = async (
         games,
       )
     };
- 
-    await mailService.sendAdminOrderConfirmation(
+
+    await sendAdminOrderConfirmation(
       ["igorshevtsooov1995@gmail.com", "contact.shevtsov@gmail.com"],
       bookedDays,
       deliveryOption,

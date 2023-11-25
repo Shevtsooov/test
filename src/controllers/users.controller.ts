@@ -3,9 +3,9 @@ import { User } from '../models/users';
 import { IUser } from '../models/users';
 import { v4 as uuidv4} from 'uuid';
 import { normalize } from '../services/user.service';
-import { mailService } from '../services/email.service';
 import bcrypt from 'bcrypt';
 import { findToken, generateTokens, removeToken, saveToken, validateRefreshToken } from '../services/token.service';
+import { sendActivation } from '../services/emailService/users/activation.email';
 // import { Token } from '../models/token.model';
 // import { sign } from '../services/jwt.service';
 
@@ -88,19 +88,19 @@ export const register = async (
   try {
 
     const newUser = await user.save();
-    await mailService.sendActivation(email, activationToken);
+    await sendActivation(email, activationToken);
 
     const normalizedUser = normalize(newUser);
     const tokens = generateTokens({ ...normalizedUser });
 
     await saveToken(normalizedUser.id, tokens.refreshToken);
 
-    res.cookie('refreshToken', tokens.refreshToken, {
-      maxAge: 30 * 24 * 60 * 60 * 1000,
-      httpOnly: true,
-      secure: true,
-      sameSite: 'none',
-    });
+    // res.cookie('refreshToken', tokens.refreshToken, {
+    //   maxAge: 30 * 24 * 60 * 60 * 1000,
+    //   httpOnly: true,
+    //   secure: true,
+    //   sameSite: 'none',
+    // });
 
     res.status(201).json({
       ...tokens,
@@ -117,20 +117,26 @@ export const activate = async (
   ) => {
     const { activationToken } = req.params;
 
-    const user = await User.findOne({activationToken: activationToken});
+    const currentUser = await User.findOne({activationToken: activationToken});
 
-    if (!user) {
+    if (!currentUser) {
       res.sendStatus(404);
 
       return;
     }
 
-    user.activationToken = 'activated';
-    user.save();
+    currentUser.activationToken = 'activated';
+    currentUser.save();
 
-    const normalizedUser = normalize(user);
+    const normalizedUser = normalize(currentUser);
+    const tokens = generateTokens({ ...normalizedUser });
 
-    res.send(normalizedUser);
+    await saveToken(normalizedUser.id, tokens.refreshToken);
+
+    res.status(200).json({
+      ...tokens,
+      user: normalizedUser
+    });
 };
 
 export const login = async (
