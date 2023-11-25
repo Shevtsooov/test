@@ -18,7 +18,14 @@ export const getList = async (
 
     const normalizedUsers = users.map(user => normalize(user));
 
-    res.json(normalizedUsers);
+    const sortedUser = normalizedUsers.sort((userA, userB) => {
+      const dateA = new Date(userA.createdAt);
+      const dateB = new Date(userB.createdAt);
+  
+      return dateB.getTime() - dateA.getTime()
+    });
+
+    res.json(sortedUser);
   } catch (error) {
     // res.status(500).json({ message: error.message });
   }
