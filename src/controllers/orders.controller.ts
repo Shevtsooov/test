@@ -56,14 +56,14 @@ export const makeNewOrder = async (
   const {
     bookedDays,
     orderedGames,
-    deliveryOption,
+    deliveryOption = 'Доставка',
     deliveryAddress,
     userId,
-    orderStatus,
+    orderStatus = 'В обробці',
     sumOfOrder,
-    userComment,
-    adminComment,
-    isArchived,
+    userComment = '',
+    adminComment = '',
+    isArchived = false,
   } = req.body;
 
   const order = new Order({
@@ -74,14 +74,14 @@ export const makeNewOrder = async (
     userId,
     orderStatus,
     sumOfOrder,
-    userComment,
     adminComment,
+    userComment,
     isArchived,
   })
 
   try {
     const newOrder = await order.save();
-
+    
     const user = await User.findOne({ _id: newOrder.userId });
     const games = await Game.find({ gameId: [...newOrder.orderedGames]})
 
@@ -107,9 +107,11 @@ export const makeNewOrder = async (
       sumOfOrder,
       userComment,
       games,
-    )
+    );
+      
     res.status(201).json(newOrder);
   } catch (error) {
+    console.error(error)
     // res.status(400).json({ message: error.message });
   }
 };
