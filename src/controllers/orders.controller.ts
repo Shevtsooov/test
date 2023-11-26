@@ -32,7 +32,16 @@ export const getUserOrders = async (
    const { id } = req.params;
 
   try {
-    let orders = await Order.find({ userId: id });
+    let orders: IOrder[] = await Order.find({ userId: id });
+
+    const sortedOrders = orders.sort((orderA, orderB) => {
+      const dateA = new Date(orderA.createdAt);
+      const dateB = new Date(orderB.createdAt);
+  
+      return dateB.getTime() - dateA.getTime()
+    });
+
+    res.json(sortedOrders);
 
     res.json(orders);
   } catch (error) {
