@@ -1,11 +1,11 @@
 import nodemailer from 'nodemailer';
 
 const transporter = nodemailer.createTransport({
-  host: 'smtp.zoho.eu',
+  host: 'mail.privateemail.com',
   port: 465,
   auth: {
-    user: "contact.shevtsov@zohomail.eu",
-    pass: "X738 XMc5 gwWc",
+    user: "playathome@appic.fun",
+    pass: "playathome",
   },
 });
 
@@ -21,7 +21,7 @@ export const sendEmail = ({
   html
 }: sendEmail) => {
   return transporter.sendMail({
-    from: "contact.shevtsov@zohomail.eu",
+    from: "playathome@appic.fun",
     to: email,
     subject,
     html,
