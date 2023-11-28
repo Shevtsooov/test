@@ -115,30 +115,3 @@ export const makeNewOrder = async (
     // res.status(400).json({ message: error.message });
   }
 };
-
-
-// {
-//   "bookedDays": [10, 20, 30],
-//   "orderedGames":  [10, 20, 30],
-//   "deliveryOption":  "delisd fsgdf gsd dfgdghsvery",
-//   "deliveryAddress": "addr gdfgdsfgdfs gess",
-//   "userId": "6557d7576cbe54049bfa14d1",
-//   "orderStatus": "В обробці",
-//   "sumOfOrder": 1200,
-//   "userComment": "comment here",
-//   "adminComment": "comment here",
-//   "isArchived": false
-// }
-
-// {
-//   "bookedDays": ['3143124', '4234234 23'],
-//   "orderedGames":  [10, 20, 30],
-//   "deliveryOption":  "delisd fsgdf gsd dfgdghsvery",
-//   "deliveryAddress": "addr gdfgdsfgdfs gess",
-//   "userId": "655757daec7e941b083da991",
-//   "orderStatus": "В обробці",
-//   "sumOfOrder": 1200,
-//   "userComment": "comment here",
-//   "adminComment": "comment here",
-//   "isArchived": false
-// }

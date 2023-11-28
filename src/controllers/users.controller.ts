@@ -6,8 +6,6 @@ import { normalize } from '../services/user.service';
 import bcrypt from 'bcrypt';
 import { findToken, generateTokens, removeToken, saveToken, validateRefreshToken } from '../services/token.service';
 import { sendActivation } from '../services/emailService/users/activation.email';
-// import { Token } from '../models/token.model';
-// import { sign } from '../services/jwt.service';
 
 export const getList = async (
   req: Request,
@@ -30,23 +28,6 @@ export const getList = async (
     // res.status(500).json({ message: error.message });
   }
 };
-
-// export const getOneUser = async (
-//   req: Request,
-//   res: Response,
-//   ): Promise<void> => {
-//    const { id } = req.params;
-
-//   try {
-//     let user = await User.findOne({ _id: id });
-
-//     const normalizedUser = normalize(user);
-
-//     res.json(normalizedUser);
-//   } catch (error) {
-//     // res.status(500).json({ message: error.message });
-//   }
-// };
 
 export const register = async (
   req: Request,
@@ -101,13 +82,6 @@ export const register = async (
     const tokens = generateTokens({ ...normalizedUser });
 
     await saveToken(normalizedUser.id, tokens.refreshToken);
-
-    // res.cookie('refreshToken', tokens.refreshToken, {
-    //   maxAge: 30 * 24 * 60 * 60 * 1000,
-    //   httpOnly: true,
-    //   secure: true,
-    //   sameSite: 'none',
-    // });
 
     res.status(201).json({
       ...tokens,
@@ -173,19 +147,6 @@ export const login = async (
 
   await saveToken(normalizedUser.id, tokens.refreshToken);
 
-  // res.cookie('accessToken', tokens.refreshToken, {
-  //   maxAge: 30 * 24 * 60 * 60 * 1000,
-  //   httpOnly: true,
-  //   secure: true,
-  //   sameSite: 'none',
-  // });
-  // res.cookie('refreshToken', tokens.refreshToken, {
-  //   maxAge: 30 * 24 * 60 * 60 * 1000,
-  //   httpOnly: true,
-  //   secure: true,
-  //   sameSite: 'none',
-  // });
-
   res.status(200).json({
     ...tokens,
     user: normalizedUser
@@ -197,10 +158,8 @@ export const logout = async (
   res: Response,
 ) => {
   const { refreshToken } = req.body;
-  console.log('logOut refreshToken - ', refreshToken);
+
   const token = await removeToken(refreshToken);
-  // res.clearCookie('refreshToken');
-  // res.clearCookie('accessToken');
 
   return res.json(token);
 };
@@ -210,15 +169,12 @@ export const refresh = async (req: Request, res: Response) => {
   try {
     const { refreshToken } = req.body;
 
-    console.log('refreshToken - ', refreshToken)
     if (!refreshToken) {
       return res.status(404).json({ error: 'Refresh token not found' });
     }
 
     const userData = validateRefreshToken(refreshToken);
     const tokenFromDB = await findToken(refreshToken);
-
-    console.log('tokenFromDB - ', tokenFromDB)
 
     if (!userData || !tokenFromDB) {
       return res.status(404).json({ error: 'Invalid refresh token' });
@@ -234,20 +190,6 @@ export const refresh = async (req: Request, res: Response) => {
     const tokens = generateTokens({ ...normalizedUser });
 
     await saveToken(normalizedUser.id, tokens.refreshToken);
-
-    // res.cookie('accessToken', tokens.refreshToken, {
-    //   maxAge: 30 * 24 * 60 * 60 * 1000,
-    //   httpOnly: true,
-    //   secure: true,
-    //   sameSite: 'none',
-    // });
-
-    // res.cookie('refreshToken', tokens.refreshToken, {
-    //   maxAge: 30 * 24 * 60 * 60 * 1000,
-    //   httpOnly: true,
-    //   secure: true,
-    //   sameSite: 'none',
-    // });
 
     res.status(201).json({
       ...tokens,
@@ -288,21 +230,6 @@ export const update = async (
       if (cartGames !== undefined) {
         updateData.cartGames = cartGames;
       }
-
-      // if (correctAnswer !== undefined) {
-      //   updateData.correctAnswer = correctAnswer;
-      // }
-
-      // if (category !== undefined) {
-      //   updateData.category = category;
-      //   updateData.categoryName = categories[category];
-      // }
-
-      // if (difficulty !== undefined) {
-      //   updateData.difficulty = difficulty;
-      // }
-      
-      console.log('cartGames - ', updateData.cartGames)
 
       user.set(updateData);
 

@@ -2,7 +2,6 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import express from 'express';
 import dotenv from 'dotenv';
-// import cookieParser from 'cookie-parser';
 import { gamesRouter } from './routes/games.routes';
 import { usersRouter } from './routes/users.routes';
 import { ordersRouter } from './routes/orders.routes';
@@ -11,12 +10,10 @@ dotenv.config();
 
 const app = express();
 
-// app.use(cookieParser());
 app.use(express.json());
 app.use(express.static('public'));
 
 app.use(cors({
-  // origin: '*',
   // origin: 'http://localhost:3000',
   // origin: 'https://web.postman.co',
   origin: 'https://ps-rental-service.vercel.app',
@@ -41,7 +38,7 @@ const connectDB = async () => {
   }
 }
 
-//Connect to the database before listening
+// Connect to the database before listening
 connectDB().then(() => {
     app.listen(PORT, () => {
       console.log(`Server is running on http://localhost:${PORT} 🚀🚀🚀`)

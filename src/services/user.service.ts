@@ -45,15 +45,3 @@ export const normalize = ({
     updatedAt,
   }
 };
-
-// export const normalize = ({
-//   id,
-//   email,
-//   activationToken,
-// }: Omit<IUser, "password" | "email" | "activationToken">) => {
-//   return {
-//     id,
-//     email,
-//     activationToken,
-//   }
-// };
