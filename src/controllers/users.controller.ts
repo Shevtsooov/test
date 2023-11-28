@@ -215,8 +215,6 @@ export const update = async (
 
     const user = await User.findOne({ _id: id })
 
-    console.log(user);
-
     if (user !== null) {
       const updateData: {
         likedGames?: string[],

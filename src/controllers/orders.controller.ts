@@ -87,7 +87,7 @@ export const makeNewOrder = async (
 
     if (user) {
       await sendClientOrderConfirmation(
-        user.email,
+        user,
         bookedDays,
         deliveryOption,
         deliveryAddress,
@@ -96,18 +96,18 @@ export const makeNewOrder = async (
         userComment,
         games,
       )
-    };
 
-    await sendAdminOrderConfirmation(
-      ["igorshevtsooov1995@gmail.com", "contact.shevtsov@gmail.com"],
-      bookedDays,
-      deliveryOption,
-      deliveryAddress,
-      orderStatus,
-      sumOfOrder,
-      userComment,
-      games,
-    );
+      await sendAdminOrderConfirmation(
+        user,
+        bookedDays,
+        deliveryOption,
+        deliveryAddress,
+        orderStatus,
+        sumOfOrder,
+        userComment,
+        games,
+      );
+    };
       
     res.status(201).json(newOrder);
   } catch (error) {

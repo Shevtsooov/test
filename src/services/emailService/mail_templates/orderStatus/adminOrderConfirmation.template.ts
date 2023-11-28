@@ -1,6 +1,24 @@
+import { Month } from "../../../../Types/Month";
 import { IGame } from "../../../../models/games";
+import { IUser } from "../../../../models/users";
+
+const ukrMonths: Month = {
+  Jan: 'січня',
+  Feb: 'лютого',
+  Mar: 'березня',
+  Apr: 'квітня',
+  May: 'травня',
+  Jun: 'червня',
+  Jul: 'липня',
+  Aug: 'серпня',
+  Sep: 'вересня',
+  Oct: 'жовтня',
+  Nov: 'листопада',
+  Dec: 'грудня',
+};
 
 export const generateAdminConfirmationEmailHTML = (
+  user: IUser,
   bookedDays: string[],
   deliveryOption: string,
   deliveryAddress: string,
@@ -10,11 +28,52 @@ export const generateAdminConfirmationEmailHTML = (
   games: IGame[],
 ) => {
 
-  const now = new Date().toDateString().slice(3);
+  const now = new Date().toDateString().slice(3).split(' ');
+  let [_, month, day, year] = now;
+
+  if (day[0] === '0') {
+    day = day[1]
+  };
+
+  const date = `${day} ${ukrMonths[month as keyof Month]}, ${year}`
+
+  let [fbMonth, fbDay] = bookedDays[0].split(' ');
+  if (fbDay[0] === '0') {
+    fbDay = fbDay[1]
+  };
+  const firstDay = `${fbDay} ${ukrMonths[fbMonth as keyof Month]}`
+
+  let [lbMonth, lbDay] = bookedDays[bookedDays.length - 1].split(' ');
+  if (lbDay[0] === '0') {
+    lbDay = lbDay[1]
+  };
+  const lastDay = `${lbDay} ${ukrMonths[lbMonth as keyof Month]}`
 
   const delivery = deliveryOption === 'Доставка'
     ? `<p style="margin: 0 0 5px 0;">Адреса доставки: ${deliveryAddress}</p>`
-    : ``
+    : ``;
+
+  const comment = userComment !== ''
+    ? `<p style="margin: 0 0 5px 0;">Коментар:</p>
+    <p style="margin: 0 0 5px 0;"><em>"${userComment}"</em></p>`
+    : ``;
+
+  let correctDayWord = bookedDays.length > 4
+    ? 'діб'
+    : 'доби'
+
+
+  const days = bookedDays.length > 1
+    ? `
+      <p style="margin: 0 0 5px 0; font-weight: 600px">
+        Заброньовані дні: ${firstDay} - ${lastDay}: ${bookedDays.length} ${correctDayWord}
+      </p>
+    `
+    : `
+      <p style="margin: 0 0 5px 0; font-weight: 600px">
+        Заброньовані дні: ${firstDay}: 1 доба
+      </p>
+    `;
 
   const renderedGames = `
   ${games.map(game => (
@@ -68,16 +127,27 @@ export const generateAdminConfirmationEmailHTML = (
 
         <main style="box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 10px;">
 
+          <div style="border-radius: 15px; background-color: #ececec; padding: 10px; margin-bottom: 15px;">
+            <h2 style="margin: 0 0 15px 0;">Інформація про клієнта</h2>
+
+            <p style="margin: 0 0 5px 0; font-size: 18px">${user.fullName}</p>
+            
+            <a href="tel:+38${user.phoneNumber}" style="display: block; text-decoration: none; margin: 0 0 5px 0; font-size: 16px">
+              +38${user.phoneNumber}
+            </a>
+
+          </div>
+
           <div style="border-radius: 15px; background-color: #ececec; padding: 10px;">
             <h2 style="margin: 0 0 15px 0;">Замовлення від ${now}</h2>
 
-            <p style="margin: 0 0 5px 0;">Заброньовані дні: ${bookedDays}</p>
+            ${days}
+
             <p style="margin: 0 0 5px 0;">Спосіб доставки: ${deliveryOption}</p>
             ${delivery}
             <p style="margin: 0 0 5px 0;">Сума: ${sumOfOrder}</p>
 
-            <p style="margin: 0 0 5px 0;">Коментар:</p>
-            <p style="margin: 0 0 5px 0;"><em>"${userComment}"</em></p>
+            ${comment}
           </div>
 
           <div style="width: 100%;">

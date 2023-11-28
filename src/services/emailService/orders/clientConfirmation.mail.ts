@@ -1,9 +1,10 @@
 import { IGame } from "../../../models/games";
+import { IUser } from "../../../models/users";
 import { sendEmail } from "../email.service";
 import { generateClientConfirmationEmailHTML } from "../mail_templates/orderStatus/clientOrderConfirmation.template";
 
 export const sendClientOrderConfirmation = (
-  email: string,
+  user: IUser,
   bookedDays: string[],
   deliveryOption: string,
   deliveryAddress: string,
@@ -12,7 +13,6 @@ export const sendClientOrderConfirmation = (
   userComment: string,
   games: IGame[],
 ) => {
-
   const html = generateClientConfirmationEmailHTML(
     bookedDays,
     deliveryOption,
@@ -24,8 +24,8 @@ export const sendClientOrderConfirmation = (
   )
 
   return sendEmail({
-    email,
+    email: user.email,
     html,
-    subject: 'Замовлення PlayAtHome'
+    subject: 'Ваше нове замовлення PlayAtHome'
   })
 };
