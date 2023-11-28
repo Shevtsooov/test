@@ -66,12 +66,13 @@ export const generateAdminConfirmationEmailHTML = (
   const days = bookedDays.length > 1
     ? `
       <p style="margin: 0 0 5px 0; font-weight: 600px">
-        Заброньовані дні: ${firstDay} - ${lastDay}: ${bookedDays.length} ${correctDayWord}
+        Заброньовані дні: 
+        <strong>${firstDay} - ${lastDay}: ${bookedDays.length} ${correctDayWord}</strong>
       </p>
     `
     : `
       <p style="margin: 0 0 5px 0; font-weight: 600px">
-        Заброньовані дні: ${firstDay}: 1 доба
+        Заброньовані дні: <strong>${firstDay}: 1 доба</strong>
       </p>
     `;
 
@@ -139,13 +140,25 @@ export const generateAdminConfirmationEmailHTML = (
           </div>
 
           <div style="border-radius: 15px; background-color: #ececec; padding: 10px;">
-            <h2 style="margin: 0 0 15px 0;">Замовлення від ${date}</h2>
+            <h3 style="margin: 0 0 15px 0;">Замовлення від ${date}</h3>
 
             ${days}
 
-            <p style="margin: 0 0 5px 0;">Спосіб доставки: ${deliveryOption}</p>
+            <p style="margin: 0 0 5px 0;">
+              Спосіб доставки:
+              <strong>
+                ${deliveryOption}
+              </strong>
+            </p>
+
             ${delivery}
-            <p style="margin: 0 0 5px 0;">Сума: ${sumOfOrder}</p>
+            
+            <p style="margin: 0 0 5px 0;">
+              Сума:
+              <strong>
+                ${sumOfOrder}грн
+              </strong>
+            </p>
 
             ${comment}
           </div>

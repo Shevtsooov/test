@@ -48,11 +48,11 @@ export const generateClientConfirmationEmailHTML = (
   const lastDay = `${lbDay} ${ukrMonths[lbMonth as keyof Month]}`
 
   const delivery = deliveryOption === 'Доставка'
-    ? `<p style="margin: 0 0 5px 0;">Адреса доставки: ${deliveryAddress}</p>`
+    ? `<p style="margin: 0 0 5px 0;">Адреса доставки: <strong>${deliveryAddress}</strong></p>`
     : ``;
 
   const comment = userComment !== ''
-    ? `<p style="margin: 0 0 5px 0;">Коментар:</p>
+    ? `<p style="margin: 0 0 5px 0;"><strong>Коментар:</strong></p>
     <p style="margin: 0 0 5px 0;"><em>"${userComment}"</em></p>`
     : ``;
 
@@ -64,12 +64,13 @@ export const generateClientConfirmationEmailHTML = (
   const days = bookedDays.length > 1
     ? `
       <p style="margin: 0 0 5px 0; font-weight: 600px">
-        Заброньовані дні: ${firstDay} - ${lastDay}: ${bookedDays.length} ${correctDayWord}
+        Заброньовані дні: 
+        <strong>${firstDay} - ${lastDay}: ${bookedDays.length} ${correctDayWord}</strong>
       </p>
     `
     : `
       <p style="margin: 0 0 5px 0; font-weight: 600px">
-        Заброньовані дні: ${firstDay}: 1 доба
+        Заброньовані дні: <strong>${firstDay}: 1 доба</strong>
       </p>
     `;
 
@@ -130,9 +131,21 @@ export const generateClientConfirmationEmailHTML = (
 
             ${days}
 
-            <p style="margin: 0 0 5px 0;">Спосіб доставки: ${deliveryOption}</p>
+            <p style="margin: 0 0 5px 0;">
+              Спосіб доставки:
+              <strong>
+                ${deliveryOption}
+              </strong>
+            </p>
+
             ${delivery}
-            <p style="margin: 0 0 5px 0;">Сума: ${sumOfOrder}грн</p>
+            
+            <p style="margin: 0 0 5px 0;">
+              Сума:
+              <strong>
+                ${sumOfOrder}грн
+              </strong>
+            </p>
 
             ${comment}
           </div>

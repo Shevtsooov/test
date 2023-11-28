@@ -4,7 +4,7 @@ const transporter = nodemailer.createTransport({
   host: 'mail.privateemail.com',
   port: 465,
   auth: {
-    user: "playathome@appic.fun",
+    user: "PlayAtHome@appic.fun",
     pass: "playathome",
   },
 });
@@ -21,7 +21,7 @@ export const sendEmail = ({
   html
 }: sendEmail) => {
   return transporter.sendMail({
-    from: "playathome@appic.fun",
+    from: "PlayAtHome@appic.fun",
     to: email,
     subject,
     html,
