@@ -7,6 +7,7 @@ import {
   update,
   logout,
   refresh,
+  ping,
   // getOneUser,
 } from '../controllers/users.controller';
 
@@ -22,6 +23,7 @@ export const usersRouter = express.Router();
 usersRouter.post('/registration', express.json(), register);
 usersRouter.post('/login', express.json(), login);
 usersRouter.post('/logout', express.json(), logout);
+usersRouter.get('/ping', express.json(), ping);
 
 usersRouter.get('/activation/:activationToken', express.json(), activate);
 usersRouter.post('/refresh', express.json(), refresh);

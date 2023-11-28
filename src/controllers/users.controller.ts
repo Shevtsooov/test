@@ -319,3 +319,15 @@ export const update = async (
     res.status(404).json({ error: 'Не вдалось оновити дані' });
   }
 };
+
+
+export const ping = async (
+  req: Request,
+  res: Response,
+  ): Promise<void> => {
+  try {
+    console.log('ping');
+  } catch (error) {
+    // res.status(500).json({ message: error.message });
+  }
+};
