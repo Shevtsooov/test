@@ -26,14 +26,14 @@ export const generateClientConfirmationEmailHTML = (
   games: IGame[],
 ) => {
 
-  const now = new Date().toDateString().slice(3).split(' ');
-  let [_, month, day, year] = now;
+  const now = new Date().toDateString().slice(4).split(' ');
+  let [month, day, year] = now;
 
   if (day[0] === '0') {
     day = day[1]
   };
 
-  const date = `${day} ${ukrMonths[month as keyof Month]}, ${year}`
+  const date = `${day} ${ukrMonths[month as keyof Month]}, ${year} року`
 
   let [fbMonth, fbDay] = bookedDays[0].split(' ');
   if (fbDay[0] === '0') {

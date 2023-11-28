@@ -28,14 +28,14 @@ export const generateAdminConfirmationEmailHTML = (
   games: IGame[],
 ) => {
 
-  const now = new Date().toDateString().slice(3).split(' ');
-  let [_, month, day, year] = now;
+  const now = new Date().toDateString().slice(4).split(' ');
+  let [month, day, year] = now;
 
   if (day[0] === '0') {
     day = day[1]
   };
 
-  const date = `${day} ${ukrMonths[month as keyof Month]}, ${year}`
+  const date = `${day} ${ukrMonths[month as keyof Month]}, ${year} року`
 
   let [fbMonth, fbDay] = bookedDays[0].split(' ');
   if (fbDay[0] === '0') {
@@ -139,7 +139,7 @@ export const generateAdminConfirmationEmailHTML = (
           </div>
 
           <div style="border-radius: 15px; background-color: #ececec; padding: 10px;">
-            <h2 style="margin: 0 0 15px 0;">Замовлення від ${now}</h2>
+            <h2 style="margin: 0 0 15px 0;">Замовлення від ${date}</h2>
 
             ${days}
 

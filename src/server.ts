@@ -14,9 +14,9 @@ app.use(express.json());
 app.use(express.static('public'));
 
 app.use(cors({
-  // origin: 'http://localhost:3000',
+  origin: 'http://localhost:3000',
   // origin: 'https://web.postman.co',
-  origin: 'https://ps-rental-service.vercel.app',
+  // origin: 'https://ps-rental-service.vercel.app',
   credentials: true
 }));
  
