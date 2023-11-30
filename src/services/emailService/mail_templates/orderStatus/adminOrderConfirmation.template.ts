@@ -50,11 +50,11 @@ export const generateAdminConfirmationEmailHTML = (
   const lastDay = `${lbDay} ${ukrMonths[lbMonth as keyof Month]}`
 
   const delivery = deliveryOption === 'Доставка'
-    ? `<p style="margin: 0 0 5px 0;">Адреса доставки: ${deliveryAddress}</p>`
+    ? `<p style="margin: 0 0 5px 0;">Адреса доставки: <strong>${deliveryAddress}</strong></p>`
     : ``;
 
-  const comment = userComment !== ''
-    ? `<p style="margin: 0 0 5px 0;">Коментар:</p>
+    const comment = userComment !== ''
+    ? `<p style="margin: 0 0 5px 0;"><strong>Коментар:</strong></p>
     <p style="margin: 0 0 5px 0;"><em>"${userComment}"</em></p>`
     : ``;
 
