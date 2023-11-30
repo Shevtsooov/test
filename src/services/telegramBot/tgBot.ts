@@ -4,9 +4,12 @@ const token = "6385076862:AAE_nxHFFhTwyoHtdd1g_kKv6YgO4K0YLvc";
 
 const bot = new telegramApi(token, { polling: true });
 
-export const startTgBot = () => {
+export const startTgBot = async () => {
   console.log('Telegram Bot started');
   
+  const allTheIds = await ChatId.find();
+  const chatIds = allTheIds.map
+
   bot.setMyCommands([
     { command: "/start", description: "Привітання" },
   ]);
@@ -16,11 +19,11 @@ export const startTgBot = () => {
     const chatId = msg.chat.id;
 
     if (text === "/start") {
-      const idNumber = new ChatId({
+      const chatIdToSave = new ChatId({
         chatId,
       });
 
-      await idNumber.save();
+      await chatIdToSave.save();
 
       await bot.sendSticker(
         chatId,
@@ -42,12 +45,11 @@ export const startTgBot = () => {
 
 export const sendTelegramNotification = async () => {
   const allTheIds = await ChatId.find();
-  const uniqueIds = new Set (allTheIds);
+  const allChatIds = allTheIds.map(id => id.chatId)
+  const uniqueIds = new Set (allChatIds);
   const chatIds = Array.from(uniqueIds);
 
-  chatIds.map(chatIdrecord => {
-    const { chatId } = chatIdrecord;
-
+  chatIds.map(chatId => {
     bot.sendMessage(
       chatId,
      'Привіт, у нас нове замовлення. Переглянь його <a href="https://ps-rental-service.vercel.app/orders">тут</a>',
