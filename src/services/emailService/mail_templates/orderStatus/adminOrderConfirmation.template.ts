@@ -1,21 +1,7 @@
 import { Month } from "../../../../Types/Month";
+import { ukrMonths } from "../../../../correctWordForms/months";
 import { IGame } from "../../../../models/games";
 import { IUser } from "../../../../models/users";
-
-const ukrMonths: Month = {
-  Jan: 'січня',
-  Feb: 'лютого',
-  Mar: 'березня',
-  Apr: 'квітня',
-  May: 'травня',
-  Jun: 'червня',
-  Jul: 'липня',
-  Aug: 'серпня',
-  Sep: 'вересня',
-  Oct: 'жовтня',
-  Nov: 'листопада',
-  Dec: 'грудня',
-};
 
 export const generateAdminConfirmationEmailHTML = (
   user: IUser,
@@ -72,7 +58,7 @@ export const generateAdminConfirmationEmailHTML = (
     `
     : `
       <p style="margin: 0 0 5px 0; font-weight: 600px">
-        Заброньовані дні: <strong>${firstDay}: 1 доба</strong>
+        Заброньований день: <strong>${firstDay}: 1 доба</strong>
       </p>
     `;
 

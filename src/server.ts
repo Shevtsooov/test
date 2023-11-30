@@ -46,4 +46,4 @@ connectDB().then(() => {
     });
 });
 
-startTgBot();
+// startTgBot();

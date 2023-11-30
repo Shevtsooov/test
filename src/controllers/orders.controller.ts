@@ -86,9 +86,19 @@ export const makeNewOrder = async (
     const user = await User.findOne({ _id: newOrder.userId });
     const games = await Game.find({ gameId: [...newOrder.orderedGames]})
 
-    sendTelegramNotification();
-
     if (user) {
+
+      await sendTelegramNotification(
+        user,
+        bookedDays,
+        deliveryOption,
+        deliveryAddress,
+        orderStatus,
+        sumOfOrder,
+        userComment,
+        games,
+      );
+
       await sendClientOrderConfirmation(
         user,
         bookedDays,
@@ -100,16 +110,16 @@ export const makeNewOrder = async (
         games,
       )
 
-      await sendAdminOrderConfirmation(
-        user,
-        bookedDays,
-        deliveryOption,
-        deliveryAddress,
-        orderStatus,
-        sumOfOrder,
-        userComment,
-        games,
-      );
+      // await sendAdminOrderConfirmation(
+      //   user,
+      //   bookedDays,
+      //   deliveryOption,
+      //   deliveryAddress,
+      //   orderStatus,
+      //   sumOfOrder,
+      //   userComment,
+      //   games,
+      // );
     };
       
     res.status(201).json(newOrder);
