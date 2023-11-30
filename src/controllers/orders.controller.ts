@@ -4,6 +4,7 @@ import { User } from '../models/users';
 import { Game } from '../models/games';
 import { sendClientOrderConfirmation } from '../services/emailService/orders/clientConfirmation.mail';
 import { sendAdminOrderConfirmation } from '../services/emailService/orders/adminConfirmation.mail';
+import { sendTelegramNotification } from '../services/telegramBot/tgBot';
 
 export const getList = async (
   req: Request,
@@ -84,6 +85,8 @@ export const makeNewOrder = async (
     
     const user = await User.findOne({ _id: newOrder.userId });
     const games = await Game.find({ gameId: [...newOrder.orderedGames]})
+
+    sendTelegramNotification();
 
     if (user) {
       await sendClientOrderConfirmation(

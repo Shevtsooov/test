@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import { gamesRouter } from './routes/games.routes';
 import { usersRouter } from './routes/users.routes';
 import { ordersRouter } from './routes/orders.routes';
+import { sendTelegramNotification, startTgBot } from './services/telegramBot/tgBot';
 
 dotenv.config();
 
@@ -14,9 +15,9 @@ app.use(express.json());
 app.use(express.static('public'));
 
 app.use(cors({
-  origin: 'http://localhost:3000',
+  // origin: 'http://localhost:3000',
   // origin: 'https://web.postman.co',
-  // origin: 'https://ps-rental-service.vercel.app',
+  origin: 'https://ps-rental-service.vercel.app',
   credentials: true
 }));
  
@@ -44,3 +45,6 @@ connectDB().then(() => {
       console.log(`Server is running on http://localhost:${PORT} 🚀🚀🚀`)
     });
 });
+
+startTgBot();
+// sendTelegramNotification();
