@@ -47,4 +47,3 @@ connectDB().then(() => {
 });
 
 startTgBot();
-// sendTelegramNotification();

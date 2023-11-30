@@ -4,7 +4,6 @@ const token = "6385076862:AAE_nxHFFhTwyoHtdd1g_kKv6YgO4K0YLvc";
 
 const bot = new telegramApi(token, { polling: true });
 
-
 export const startTgBot = () => {
   console.log('Telegram Bot started');
   
@@ -23,7 +22,6 @@ export const startTgBot = () => {
 
       await idNumber.save();
 
-      console.log(ChatId);
       await bot.sendSticker(
         chatId,
         "https://tlgrm.ru/_/stickers/8a1/9aa/8a19aab4-98c0-37cb-a3d4-491cb94d7e12/21.webp"
@@ -44,10 +42,12 @@ export const startTgBot = () => {
 
 export const sendTelegramNotification = async () => {
   const allTheIds = await ChatId.find();
+  const uniqueIds = new Set (allTheIds);
+  const chatIds = Array.from(uniqueIds);
 
-  allTheIds.map(chatIdrecord => {
+  chatIds.map(chatIdrecord => {
     const { chatId } = chatIdrecord;
-    console.log(chatId);
+
     bot.sendMessage(
       chatId,
      'Привіт, у нас нове замовлення. Переглянь його <a href="https://ps-rental-service.vercel.app/orders">тут</a>',
