@@ -4,7 +4,10 @@ import { IGame } from "../../models/games";
 import { IUser } from "../../models/users";
 import { Month } from "../../Types/Month";
 import { ukrMonths } from "../../correctWordForms/months";
-const token = "6385076862:AAE_nxHFFhTwyoHtdd1g_kKv6YgO4K0YLvc";
+import dotenv from 'dotenv';
+dotenv.config();
+
+const token = process.env.TG_BOT_TOKEN as string;
 
 const bot = new telegramApi(token, { polling: true });
 
