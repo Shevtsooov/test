@@ -8,6 +8,8 @@ import {
   logout,
   refresh,
   ping,
+  initializeResetPassword,
+  passwordReset,
 } from '../controllers/users.controller';
 
 export const usersRouter = express.Router();
@@ -23,3 +25,6 @@ usersRouter.post('/refresh', express.json(), refresh);
 
 usersRouter.patch('/users', express.json(), update);
 usersRouter.get('/users', express.json(), getList);
+
+usersRouter.post('/initializePasswordReset', express.json(), initializeResetPassword)
+usersRouter.post('/passwordReset', express.json(), passwordReset)

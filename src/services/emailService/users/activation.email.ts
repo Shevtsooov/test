@@ -1,12 +1,12 @@
 import { sendEmail } from "../email.service";
-import { genereateActivationEmail } from "../mail_templates/user/activation.template";
+import { generateActivationEmail } from "../mail_templates/user/activation.template";
 
 export const sendActivation = (
   email: string,
   token: string,
   ) => {
 
-  const html = genereateActivationEmail(token);
+  const html = generateActivationEmail(token);
 
   return sendEmail({
     email,

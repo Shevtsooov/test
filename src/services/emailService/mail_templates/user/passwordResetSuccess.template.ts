@@ -1,29 +1,17 @@
-export const generateActivationEmail = (
- token: string
-) => {
+export const generatePasswordResetSuccessEmail = () => {
 
-  const href = `https://ps-rental-service.vercel.app/activate/${token}`
+  const href = `https://ps-rental-service.vercel.app/login`;
 
   const html = `
   <h1 style="text-align: left; margin: 0; font-size: 24px;">
-    Активація аккаунту
+    Ваш пароль було успішно оновлено
   </h1>
-  <p style="margin-bottom: 25px;">Щоб активувати свій аккаунт, натисніть кнопку "Активувати":</p>
 
   <a href="${href}" style="display: block; margin-bottom: 25px;">
     <button style="display: block; border: 0; border-radius: 30px; background-color: #0070d1; padding: 10px 25px; font-size: 20px; color: #fff; margin: 0 auto;">
-      Активувати
+      Увійти
     </button>
   </a>
-
-  <p style="font-size: 14px;">або перейдіть за наступним посиланням:</p>
-  <a href="${href}" style="display: block; text-decoration: none; color: #0070d1; margin-bottom: 35px;">${href}</a>
-
-  <p style="margin-bottom: 25px; ">
-    <em>
-      *Тільки активовані користувачі мають змогу увійти на сервіс та скористатись нашими послугами, саме тому активація аккаунту необхідна.
-    </em>
-  </p>
   `;
 
   return `

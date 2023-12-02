@@ -6,6 +6,8 @@ import { normalize } from '../services/user.service';
 import bcrypt from 'bcrypt';
 import { findToken, generateTokens, removeToken, saveToken, validateRefreshToken } from '../services/token.service';
 import { sendActivation } from '../services/emailService/users/activation.email';
+import { sendPasswordResetEmail } from '../services/emailService/users/passwordReset.email';
+import { sendPasswordResetSuccessEmail } from '../services/emailService/users/passwordResetSuccess.email';
 
 export const getList = async (
   req: Request,
@@ -52,7 +54,7 @@ export const register = async (
     isBanned = false,
   } = req.body;
   const activationToken = uuidv4();
-  const hashedPassword = await bcrypt.hash(password, 3)
+  const hashedPassword = await bcrypt.hash(password, 3);
 
   const user = new User({
     email,
@@ -98,7 +100,7 @@ export const activate = async (
   ) => {
     const { activationToken } = req.params;
 
-    const currentUser = await User.findOne({activationToken: activationToken});
+    const currentUser = await User.findOne({ activationToken });
 
     if (!currentUser) {
       res.sendStatus(404);
@@ -255,4 +257,63 @@ export const ping = async (
   } catch (error) {
     // res.status(500).json({ message: error.message });
   }
+};
+
+
+export const initializeResetPassword = async (
+  req: Request,
+  res: Response,
+  ) => {
+    const { email } = req.body;
+
+    const currentUser = await User.findOne({ email });
+
+    if (!currentUser) {
+      res.sendStatus(404);
+
+      return;
+    }
+
+    const activationToken = uuidv4();
+    await sendPasswordResetEmail(currentUser.email, activationToken)
+
+    currentUser.activationToken = activationToken;
+    currentUser.save();
+
+    const normalizedUser = normalize(currentUser);
+    const tokens = generateTokens({ ...normalizedUser });
+
+    await saveToken(normalizedUser.id, tokens.refreshToken);
+
+    res.status(200).json('Email sent');
+};
+
+export const passwordReset = async (
+  req: Request,
+  res: Response,
+  ) => {
+    const { password, resetToken } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 3)
+
+    const currentUser = await User.findOne({ activationToken: resetToken  });
+
+    if (!currentUser) {
+      res.sendStatus(404);
+
+      return;
+    }
+
+    currentUser.password = hashedPassword;
+
+    currentUser.activationToken = 'activated';
+    currentUser.save();
+
+    await sendPasswordResetSuccessEmail(currentUser.email);
+
+    const normalizedUser = normalize(currentUser);
+    const tokens = generateTokens({ ...normalizedUser });
+
+    await saveToken(normalizedUser.id, tokens.refreshToken);
+
+    res.status(200).json('Password changed');
 };
