@@ -106,7 +106,7 @@ export const sendTelegramNotification = async (
   chatIds.map(chatId => {
     bot.sendMessage(
       chatId,
-      `🛒 Нове замовлення від ${user.fullName}
+      `🛒 ${user.fullName} зробив нове замовлення.
 📱Номер телефону: <a href="tel:+38${user.phoneNumber}">+38${user.phoneNumber}</a>
 
 ${comment}
