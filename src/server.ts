@@ -15,7 +15,7 @@ app.use(express.static('public'));
 
 app.use(cors({
   // origin: 'http://localhost:3000',
-  origin: 'process.env.PRODUCTION_LINK',
+  origin: process.env.PRODUCTION_LINK,
 
   // origin: 'https://web.postman.co',
   credentials: true
