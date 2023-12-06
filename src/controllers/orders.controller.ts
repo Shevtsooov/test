@@ -61,7 +61,7 @@ export const makeNewOrder = async (
     deliveryOption = 'Доставка',
     deliveryAddress,
     userId,
-    orderStatus = 'В обробці',
+    orderStatus = 'Нове замовлення',
     sumOfOrder,
     userComment = '',
     adminComment = '',
