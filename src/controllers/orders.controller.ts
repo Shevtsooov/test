@@ -1,10 +1,11 @@
 import type { Request, Response } from 'express';
 import { IOrder, Order } from '../models/orders';
-import { User } from '../models/users';
+import { IUser, User } from '../models/users';
 import { Game } from '../models/games';
 import { sendClientOrderConfirmation } from '../services/emailService/orders/clientConfirmation.mail';
 import { sendAdminOrderConfirmation } from '../services/emailService/orders/adminConfirmation.mail';
 import { sendTelegramNotification } from '../services/telegramBot/tgBot';
+import { sendClientOrderCompleted } from '../services/emailService/orders/clientCompleted.mail';
 
 export const getList = async (
   req: Request,
@@ -139,16 +140,22 @@ export const updateOrder = async (
       orderStatus,
     } = req.body;
 
-    const order = await Order.findOne({ _id })
+    const order = await Order.findOne({ _id });
+    const orderUser = await User.findOne({ _id: order?.userId });
 
     if (order !== null) {
       const updateData: {
         orderStatus?: string[],
-        cartGames?: string[],
       } = {};
 
       if (orderStatus !== undefined) {
         updateData.orderStatus = orderStatus;
+
+        if (orderUser && orderStatus === 'Завершене') {
+          await sendClientOrderCompleted(orderUser);
+          orderUser.completedOrders = orderUser.completedOrders + 1;
+          await orderUser.save();
+        }
       }
 
       order.set(updateData);

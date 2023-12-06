@@ -1,6 +1,9 @@
 import { Month } from "../../../../Types/Month";
 import { ukrMonths } from "../../../../correctWordForms/months";
 import { IGame } from "../../../../models/games";
+import { footer } from "../general_templates/footer";
+import { head } from "../general_templates/head";
+import { header } from "../general_templates/header";
 
 export const generateClientConfirmationEmailHTML = (
   bookedDays: string[],
@@ -89,26 +92,11 @@ export const generateClientConfirmationEmailHTML = (
 `
 
   return `
-    <!DOCTYPE html>
-    <html lang="ua" style="box-sizing: border-box; margin: 0">
-      <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap" rel="stylesheet">
-      </head>
+      ${head}
+      
       <body style="box-sizing: border-box; margin: 0; padding: 0; font-family: 'Trebuchet MS', Arial, sans-serif; font-weight: 400;">
 
-      <header
-        style="text-align: center; height: 60px; background-color: #ececec; padding-top: 20px; border-radius: 15px; margin-bottom: 15px;"
-      >
-        <a href="https://ps-rental-service.vercel.app/home">
-          <img
-            src="https://i.ibb.co/cv6k6gY/1.png"
-            alt=""
-            style="width: 220px; object-fit: cover;"
-          >
-        </a>
-      </header>
+        ${header}
 
         <main style="box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 10px;">
 
@@ -145,22 +133,8 @@ export const generateClientConfirmationEmailHTML = (
 
         </main>
 
-        <footer style="box-sizing: border-box; padding: 10px; font-size: 28px; color: #ececec; background-color: #0070d1; border-radius: 15px;">
-          <a href="https://ps-rental-service.vercel.app/home">
-            <img
-              src="https://i.ibb.co/DK2867S/123.png"
-              alt=""
-              style="width: 200px; object-fit: cover;"
-            >
-          </a>
-          <hr style="color: #ececec; margin-top: 0;">
-          <a href="https://ps-rental-service.vercel.app/home" style="display: block; text-decoration: none; margin: 0; font-size: 16px; color: #ececec; margin-bottom: 10px;">Головна</a>
-          <a href="https://ps-rental-service.vercel.app/games" style="display: block; text-decoration: none; margin: 0; font-size: 16px; color: #ececec; margin-bottom: 10px;">Ігри</a>
-          <a href="https://ps-rental-service.vercel.app/plans" style="display: block; text-decoration: none; margin: 0; font-size: 16px; color: #ececec; margin-bottom: 10px;">Тарифи і доставка</a>
-          <a href="https://ps-rental-service.vercel.app/agreement" style="display: block; text-decoration: none; margin: 0; font-size: 16px; color: #ececec; margin-bottom: 10px;">Умови договору</a>
-          <a href="https://ps-rental-service.vercel.app/contacts" style="display: block; text-decoration: none; margin: 0; font-size: 16px; color: #ececec; margin-bottom: 10px;">Контакти</a>
-          <a href="https://ps-rental-service.vercel.app/login" style="display: block; text-decoration: none; margin: 0; font-size: 16px; color: #ececec; margin-bottom: 25px;">Увійти</a>
-        </footer>
+        ${footer}
+        
       </body>
     </html>
   `
