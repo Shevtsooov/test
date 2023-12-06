@@ -128,3 +128,39 @@ export const makeNewOrder = async (
     // res.status(400).json({ message: error.message });
   }
 };
+
+export const updateOrder = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const {
+      _id,
+      orderStatus,
+    } = req.body;
+
+    const order = await Order.findOne({ _id })
+
+    if (order !== null) {
+      const updateData: {
+        orderStatus?: string[],
+        cartGames?: string[],
+      } = {};
+
+      if (orderStatus !== undefined) {
+        updateData.orderStatus = orderStatus;
+      }
+
+      order.set(updateData);
+
+      const updatedOrder = await order.save();
+
+      res.statusCode = 200;
+      res.send(updatedOrder);
+    } else {
+      res.status(404).json({ error: 'Замовлення не знайдено' });
+    }
+  } catch (error) {
+    res.status(404).json({ error: 'Не вдалось оновити дані' });
+  }
+};
