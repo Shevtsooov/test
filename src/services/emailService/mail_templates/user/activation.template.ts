@@ -1,12 +1,14 @@
 import { footer } from "../general_templates/footer";
 import { head } from "../general_templates/head";
 import { header } from "../general_templates/header";
+import dotenv from 'dotenv';
+dotenv.config();
 
 export const generateActivationEmail = (
  token: string
 ) => {
 
-  const href = `https://ps-rental-service.vercel.app/activate/${token}`
+  const href = `${process.env.PRODUCTION_LINK}/activate/${token}`
 
   const html = `
   <h1 style="text-align: left; margin: 0; font-size: 24px;">

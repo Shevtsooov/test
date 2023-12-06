@@ -5,6 +5,10 @@ import { header } from "../general_templates/header";
 
 export const generateClientCompletedEmailHTML = (user: IUser) => {
 
+  const reviewLink = `
+    
+  `
+
   return `
       ${head}
       
@@ -14,7 +18,7 @@ export const generateClientCompletedEmailHTML = (user: IUser) => {
 
         <main style="box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 10px;">
 
-          <p>${user.fullName}</p>
+        
 
         </main>
 

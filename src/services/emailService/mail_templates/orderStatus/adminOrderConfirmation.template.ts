@@ -69,7 +69,7 @@ export const generateAdminConfirmationEmailHTML = (
   ${games.map(game => (
     `
     <div style="box-sizing: border-box; display: flex; flex-direction: row; gap: 10px; width: 100%; margin-bottom: 15px;">
-        <a href=${`https://ps-rental-service.vercel.app/games/${game.gameId}`} style="text-decoration: none;">
+        <a href=${`${process.env.PRODUCTION_LINK}/games/${game.gameId}`} style="text-decoration: none;">
           <img
             src=${game.iconLink}
             alt=${game.gameId}
@@ -79,7 +79,7 @@ export const generateAdminConfirmationEmailHTML = (
 
         <div style="box-sizing: border-box; flex-grow: 1; margin-left: 10px">
           <a
-            href=${`https://ps-rental-service.vercel.app/games/${game.gameId}`}
+            href=${`${process.env.PRODUCTION_LINK}/games/${game.gameId}`}
             style="font-size: 18px; font-weight: 600; margin-bottom: 10px; color: #000; "
           >
             ${game.title}
@@ -145,9 +145,8 @@ export const generateAdminConfirmationEmailHTML = (
           </div>
 
         </main>
-
-        ${footer}
         
+        ${footer}
       </body>
     </html>
   `

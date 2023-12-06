@@ -88,7 +88,7 @@ export const sendTelegramNotification = async (
       <b>${firstDay}: 1 доба</b>`;
 
   const chosenGames = games.map(game => (
-    `  •   <a href="https://ps-rental-service.vercel.app/games/${game.gameId}">${game.title}</a>`
+    `  •   <a href="${process.env.PRODUCTION_LINK}/games/${game.gameId}">${game.title}</a>`
   ))
   
   const renderedGames = chosenGames.join(',\n');
@@ -123,7 +123,7 @@ ${renderedGames}
 
 💸 Сума: <b>${sumOfOrder}грн</b>
 
-🌐 Переглянь це замовлення <a href="https://ps-rental-service.vercel.app/orders">на сайті</a>
+🌐 Переглянь це замовлення <a href="${process.env.PRODUCTION_LINK}/orders">на сайті</a>
 __________________________
       `,
      {
