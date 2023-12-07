@@ -213,6 +213,7 @@ export const update = async (
       id,
       likedGames,
       cartGames,
+      reviewLink,
     } = req.body;
 
     const user = await User.findOne({ _id: id })
@@ -221,6 +222,7 @@ export const update = async (
       const updateData: {
         likedGames?: string[],
         cartGames?: string[],
+        reviewLink?: string,
       } = {};
 
       if (likedGames !== undefined) {
@@ -229,6 +231,10 @@ export const update = async (
 
       if (cartGames !== undefined) {
         updateData.cartGames = cartGames;
+      }
+
+      if (reviewLink !== undefined) {
+        updateData.reviewLink = reviewLink;
       }
 
       user.set(updateData);
