@@ -1,117 +1,88 @@
 import type { Request, Response } from 'express';
 import { Game } from '../models/games'
+import { Review } from '../models/reviews';
 
-export const getGamesList = async (
+export const getReviewsList = async (
   req: Request,
   res: Response,
   ): Promise<void> => {
-  const {
-    sortBy = 'DESC',
-    query = '',
-    categories,
-    year,
-    players,
-  } = req.query;
-
   try {
-    let games = await Game.find();
+    let reviews = await Review.find();
 
-    if (query !== '') {
-      const formattedQuery = new RegExp(query.toString(), 'i');
-      games = games.filter((game) => (
-        game.title?.match(formattedQuery) || game.description?.match(formattedQuery)
-      ));
-    }
-
-    if (year) {
-      games = games.filter((game) => game.releasedOn?.includes(year.toString()));
-    }
-
-    if (players) {
-      games = games.filter((game) => game.players?.includes(players.toString()));
-    }
-
-    if (categories) {
-      const searchedCategories = categories.toString().split(',').map((category) => category.trim());
-      games = games.filter((game) => {
-        const gameCategories = game.category.map((cat) => cat.trim());
-        return searchedCategories.every((cat) => gameCategories.includes(cat));
-      });
-    }
-
-    games.sort((gA, gB) => {
-      const [dayA, monthA, yearA] = gA.releasedOn!.toString().split('/').map(Number);
-      const [dayB, monthB, yearB] = gB.releasedOn!.toString().split('/').map(Number);
-
-      if (yearA !== yearB) {
-        return sortBy === 'DESC'
-          ? yearB - yearA
-          : yearA - yearB
-      } 
-      
-      if (monthA !== monthB) {
-        return sortBy === 'DESC'
-          ? monthB - monthA
-          : monthA - monthB
-      }
-
-      return sortBy === 'DESC'
-        ? dayB - dayA
-        : dayA - dayB
-      });
-
-    res.json(games);
+    const sortedReviews = reviews.sort((reviewA, reviewB) => {
+      const dateA = new Date(reviewA.createdAt);
+      const dateB = new Date(reviewB.createdAt);
+  
+      return dateB.getTime() - dateA.getTime()
+    });
+    res.json(sortedReviews);
   } catch (error) {
     // res.status(500).json({ message: error.message });
   }
 };
 
-export const addGameToList = async (
+export const addReviewToList = async (
   req: Request,
   res: Response
 ) => {
   const {
-    title,
-    icon,
-    iconLink,
-    gameId,
-    poster,
-    description,
-    videoReview,
-    videoGameplay,
-    price,
-    discountedPrice,
-    category,
-    players,
-    disclaimers,
-    releasedOn,
-    isAvailable,
-    popularity,
+    userId,
+    status = 'На перегляді',
+    stars,
+    comment = '',
+    isArchived = false,
   } = req.body;
 
-  const game = new Game({
-    title,
-    icon,
-    iconLink,
-    gameId,
-    poster,
-    description,
-    videoReview,
-    videoGameplay,
-    price,
-    discountedPrice,
-    category,
-    players,
-    disclaimers,
-    releasedOn,
-    isAvailable,
-    popularity,
+  const review = new Review({
+    userId,
+    status,
+    stars,
+    comment,
+    isArchived,
   })
 
   try {
-    const newGame = await game.save();
-    res.status(201).json(newGame);
+    const newReview = await review.save();
+    console.log('here');
+
+    res.status(201).json(newReview);
   } catch (error) {
     // res.status(400).json({ message: error.message });
+  }
+};
+
+
+export const updateReview = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const {
+      _id,
+      status,
+    } = req.body;
+
+    const review = await Review.findOne({ _id })
+
+    if (review !== null) {
+      const updateData: {
+        status?: string,
+      } = {};
+
+      if (status !== undefined) {
+        updateData.status = status;
+      }
+
+      review.set(updateData);
+
+      const updatedReview = await review.save();
+
+      res.statusCode = 200;
+      res.send(updatedReview);
+    } else {
+      res.status(404).json({ error: 'Відгук не знайдено' });
+    }
+  } catch (error) {
+    res.status(404).json({ error: 'Не вдалось оновити дані' });
   }
 };

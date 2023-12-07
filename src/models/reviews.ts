@@ -1,28 +1,32 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 
-const reviewSchema = new mongoose.Schema({
+export interface IReview {
+  id: string,
+  userId: string;
+  status: string;
+  stars: number;
+  comment: string;
+  isArchived: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+const reviewSchema = new mongoose.Schema<IReview>({
   userId: {
     type: String,
-  },
-  orderId: {
-    type: String,
+    ref: 'User',
   },
   status: {
     type: String,
   },
-  
   stars: {
     type: Number,
   },
-  text: {
+  comment: {
     type: String,
   },
-
-  pros: {
-    type: String,
-  },
-  cons: {
-    type: String,
+  isArchived: {
+    type: Boolean,
   },
 });
 

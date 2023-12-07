@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import { gamesRouter } from './routes/games.routes';
 import { usersRouter } from './routes/users.routes';
 import { ordersRouter } from './routes/orders.routes';
+import { reviewsRouter } from './routes/reviews.routes';
 
 dotenv.config();
 
@@ -24,7 +25,7 @@ app.use(cors({
 app.use(gamesRouter);
 app.use(usersRouter);
 app.use(ordersRouter);
-// app.use(reviewsRouter);
+app.use(reviewsRouter);
 
 const PORT = process.env.PORT || 5020;
 

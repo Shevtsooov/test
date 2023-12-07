@@ -13,7 +13,7 @@ export interface IUser {
   cartGames: string[];
   orders: string[];
   completedOrders: number;
-  shouldLeaveReview: boolean;
+  reviewLink: string;
   userReviews: string[];
   isArchived: boolean;
   isBanned: boolean;
@@ -23,9 +23,6 @@ export interface IUser {
 }
 
 const userSchema = new mongoose.Schema<IUser>({
-  // _id: {
-  //   type: String,
-  // },
   email: {
     type: String,
     required: true,
@@ -62,8 +59,8 @@ const userSchema = new mongoose.Schema<IUser>({
   completedOrders: {
     type: Number,
   },
-  shouldLeaveReview: {
-    type: Boolean,
+  reviewLink: {
+    type: String,
   },
   userReviews: {
     type: [String],

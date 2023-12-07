@@ -6,8 +6,8 @@ import { header } from "../general_templates/header";
 export const generateClientCompletedEmailHTML = (user: IUser) => {
 
   const reviewLink = `
-    
-  `
+    ${process.env.PRODUCTION_LINK}/feedback/${user.reviewLink}
+  `;
 
   return `
       ${head}
@@ -18,7 +18,11 @@ export const generateClientCompletedEmailHTML = (user: IUser) => {
 
         <main style="box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 10px;">
 
-        
+        <a href="${reviewLink}" style="display: block; margin: 25px;">
+          <button style="display: block; border: 0; border-radius: 30px; background-color: #0070d1; padding: 10px 25px; font-size: 20px; color: #fff; margin: 0 auto;">
+            Залишити відгук
+          </button>
+        </a>
 
         </main>
 

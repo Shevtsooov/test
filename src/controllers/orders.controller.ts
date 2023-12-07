@@ -1,6 +1,7 @@
 import type { Request, Response } from 'express';
 import { IOrder, Order } from '../models/orders';
 import { IUser, User } from '../models/users';
+import { v4 as uuidv4} from 'uuid';
 import { Game } from '../models/games';
 import { sendClientOrderConfirmation } from '../services/emailService/orders/clientConfirmation.mail';
 import { sendAdminOrderConfirmation } from '../services/emailService/orders/adminConfirmation.mail';
@@ -145,15 +146,20 @@ export const updateOrder = async (
 
     if (order !== null) {
       const updateData: {
-        orderStatus?: string[],
+        orderStatus?: string,
       } = {};
 
       if (orderStatus !== undefined) {
         updateData.orderStatus = orderStatus;
 
         if (orderUser && orderStatus === 'Завершене') {
-          await sendClientOrderCompleted(orderUser);
+          const reviewLink = uuidv4();
+          
+          orderUser.reviewLink = reviewLink;
           orderUser.completedOrders = orderUser.completedOrders + 1;
+          
+          await sendClientOrderCompleted(orderUser);
+          
           await orderUser.save();
         }
       }

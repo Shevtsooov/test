@@ -1,11 +1,9 @@
-// import express from 'express';
+import express from 'express';
+import { addReviewToList, getReviewsList, updateReview } from '../controllers/reviews.controller';
 
-// import {
-//   getGamesList,
-//   addGameToList,
-// } from '../controllers/games.controller'
+export const reviewsRouter = express.Router();
 
-// export const gamesRouter = express.Router();
+reviewsRouter.get('/reviews', express.json(), getReviewsList);
+reviewsRouter.post('/reviews', express.json(), addReviewToList);
 
-// gamesRouter.get('/games', express.json(), getGamesList);
-// gamesRouter.post('/games', express.json(), addGameToList);
+reviewsRouter.patch('/reviews', express.json(), updateReview);
