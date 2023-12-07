@@ -1,6 +1,8 @@
 import type { Request, Response } from 'express';
 import { Game } from '../models/games'
 import { Review } from '../models/reviews';
+import { User } from '../models/users';
+import { sendTelegramReviewNotification } from '../services/telegramBot/newReview';
 
 export const getReviewsList = async (
   req: Request,
@@ -43,7 +45,11 @@ export const addReviewToList = async (
 
   try {
     const newReview = await review.save();
-    console.log('here');
+    const currentUser = await User.findOne({ _id: userId });
+
+    if (currentUser) {
+      await sendTelegramReviewNotification(newReview, currentUser)
+    }
 
     res.status(201).json(newReview);
   } catch (error) {

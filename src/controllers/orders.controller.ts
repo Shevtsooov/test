@@ -5,8 +5,8 @@ import { v4 as uuidv4} from 'uuid';
 import { Game } from '../models/games';
 import { sendClientOrderConfirmation } from '../services/emailService/orders/clientConfirmation.mail';
 import { sendAdminOrderConfirmation } from '../services/emailService/orders/adminConfirmation.mail';
-import { sendTelegramNotification } from '../services/telegramBot/tgBot';
 import { sendClientOrderCompleted } from '../services/emailService/orders/clientCompleted.mail';
+import { sendTelegramOrderNotification } from '../services/telegramBot/newOrder';
 
 export const getList = async (
   req: Request,
@@ -90,7 +90,7 @@ export const makeNewOrder = async (
 
     if (user) {
 
-      await sendTelegramNotification(
+      await sendTelegramOrderNotification(
         user,
         bookedDays,
         deliveryOption,
@@ -159,7 +159,7 @@ export const updateOrder = async (
           orderUser.completedOrders = orderUser.completedOrders + 1;
           
           await sendClientOrderCompleted(orderUser);
-          
+
           await orderUser.save();
         }
       }
