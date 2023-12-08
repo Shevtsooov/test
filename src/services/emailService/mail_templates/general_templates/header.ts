@@ -1,6 +1,6 @@
 export const header = `
   <header
-  style="text-align: center; height: 60px; background-color: #ececec; padding-top: 20px; border-radius: 15px; margin-bottom: 15px;"
+    style="text-align: center; height: 50px; background-color: #ececec; padding-top: 20px; border-radius: 15px; margin-bottom: 15px;"
   >
     <a href="${process.env.PRODUCTION_LINK}/home">
       <img
