@@ -4,11 +4,10 @@ export const header = `
   >
     <a href="${process.env.PRODUCTION_LINK}/home">
       <img
-        src="https://i.ibb.co/CvrkL8B/Play-At-Home-blue.png"
+        src="https://i.ibb.co/s1kSMy7/Play-At-Home-blue.png"
         alt=""
         style="width: 220px; object-fit: cover;"
       >
     </a>
   </header>
 `;
-
