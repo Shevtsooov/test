@@ -38,7 +38,7 @@ const connectDB = async () => {
     console.log(error);
     process.exit(1);
   }
-}
+} 
 
 // Connect to the database before listening
 connectDB().then(() => {
