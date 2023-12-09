@@ -6,6 +6,7 @@ import { gamesRouter } from './routes/games.routes';
 import { usersRouter } from './routes/users.routes';
 import { ordersRouter } from './routes/orders.routes';
 import { reviewsRouter } from './routes/reviews.routes';
+import { startTgBot } from './services/telegramBot/tgBot';
 
 dotenv.config();
 
@@ -45,3 +46,6 @@ connectDB().then(() => {
       console.log(`Server is running on http://localhost:${PORT} 🚀🚀🚀`)
     });
 });
+
+
+startTgBot();

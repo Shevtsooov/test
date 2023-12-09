@@ -1,9 +1,5 @@
 import telegramApi from "node-telegram-bot-api";
 import { ChatId } from '../../models/chatId';
-import { IGame } from "../../models/games";
-import { IUser } from "../../models/users";
-import { Month } from "../../Types/Month";
-import { ukrMonths } from "../../correctWordForms/months";
 import dotenv from 'dotenv';
 dotenv.config();
 
