@@ -16,8 +16,8 @@ app.use(express.json());
 app.use(express.static('public'));
 
 app.use(cors({
-  // origin: 'http://localhost:3000',
-  origin: process.env.PRODUCTION_LINK,
+  origin: 'http://localhost:3000',
+  // origin: process.env.PRODUCTION_LINK,
 
   // origin: 'https://web.postman.co',
   credentials: true
@@ -48,4 +48,4 @@ connectDB().then(() => {
 });
 
 
-// startTgBot();
+startTgBot();
