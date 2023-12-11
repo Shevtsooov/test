@@ -17,6 +17,7 @@ export interface IUser {
   userReviews: string[];
   isArchived: boolean;
   isBanned: boolean;
+  resetToken: string;
   activationToken: string;
   createdAt: Date;
   updatedAt: Date;
@@ -70,6 +71,9 @@ const userSchema = new mongoose.Schema<IUser>({
   },
   isBanned: {
     type: Boolean,
+  },
+  resetToken: {
+    type: String,
   },
   activationToken: {
     type: String,

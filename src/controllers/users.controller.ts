@@ -49,6 +49,7 @@ export const register = async (
     orders = [],
     completedOrders = 0,
     reviewLink = '',
+    resetToken = '',
     userReviews = [],
     isArchived = false,
     isBanned = false,
@@ -73,6 +74,7 @@ export const register = async (
     isArchived,
     isBanned,
     activationToken,
+    resetToken,
   });
 
   try {
@@ -280,10 +282,10 @@ export const initializeResetPassword = async (
       return;
     }
 
-    const activationToken = uuidv4();
-    await sendPasswordResetEmail(currentUser.email, activationToken)
+    const resetToken = uuidv4();
+    await sendPasswordResetEmail(currentUser.email, resetToken)
 
-    currentUser.activationToken = activationToken;
+    currentUser.resetToken = resetToken;
     currentUser.save();
 
     const normalizedUser = normalize(currentUser);
@@ -299,9 +301,10 @@ export const passwordReset = async (
   res: Response,
   ) => {
     const { password, resetToken } = req.body;
+    console.log(resetToken);
     const hashedPassword = await bcrypt.hash(password, 3)
 
-    const currentUser = await User.findOne({ activationToken: resetToken  });
+    const currentUser = await User.findOne({ resetToken });
 
     if (!currentUser) {
       res.sendStatus(404);
@@ -311,7 +314,7 @@ export const passwordReset = async (
 
     currentUser.password = hashedPassword;
 
-    currentUser.activationToken = 'activated';
+    currentUser.resetToken = '';
     currentUser.save();
 
     await sendPasswordResetSuccessEmail(currentUser.email);

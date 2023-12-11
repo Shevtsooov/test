@@ -48,4 +48,4 @@ connectDB().then(() => {
 });
 
 
-startTgBot();
+// startTgBot();
