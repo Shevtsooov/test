@@ -8,6 +8,7 @@ import { findToken, generateTokens, removeToken, saveToken, validateRefreshToken
 import { sendActivation } from '../services/emailService/users/activation.email';
 import { sendPasswordResetEmail } from '../services/emailService/users/passwordReset.email';
 import { sendPasswordResetSuccessEmail } from '../services/emailService/users/passwordResetSuccess.email';
+import { sendTelegramNewClientNotification } from '../services/telegramBot/newClient';
 
 export const getList = async (
   req: Request,
@@ -86,7 +87,8 @@ export const register = async (
     const tokens = generateTokens({ ...normalizedUser });
 
     await saveToken(normalizedUser.id, tokens.refreshToken);
-
+    await sendTelegramNewClientNotification(user);
+    
     res.status(201).json({
       ...tokens,
       user: normalizedUser

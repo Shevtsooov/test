@@ -1,4 +1,3 @@
-import { Month } from "../../Types/Month";
 import { ChatId } from "../../models/chatId";
 import { IReview } from "../../models/reviews";
 import { IUser } from "../../models/users";
