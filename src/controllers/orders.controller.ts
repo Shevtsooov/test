@@ -86,7 +86,17 @@ export const makeNewOrder = async (
     const newOrder = await order.save();
     
     const user = await User.findOne({ _id: newOrder.userId });
-    const games = await Game.find({ gameId: [...newOrder.orderedGames]})
+    const games = await Game.find({ gameId: [...newOrder.orderedGames]});
+
+    console.log(games)
+
+    const updatedGames = games.map(async (game) => {
+      game.popularity += 1;
+      await game.save();
+      return game;
+    });
+
+    console.log(updatedGames)
 
     if (user) {
 
@@ -110,7 +120,7 @@ export const makeNewOrder = async (
         sumOfOrder,
         userComment,
         games,
-      )
+      );
 
       // await sendAdminOrderConfirmation(
       //   user,
