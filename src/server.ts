@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import express from 'express';
 import dotenv from 'dotenv';
+
 import { gamesRouter } from './routes/games.routes';
 import { usersRouter } from './routes/users.routes';
 import { ordersRouter } from './routes/orders.routes';

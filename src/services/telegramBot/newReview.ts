@@ -61,7 +61,7 @@ __________________________
      {
        parse_mode: 'HTML',
        disable_web_page_preview: true,
-       protect_content: true,
+      //  protect_content: true,
      }
    )});
  }
